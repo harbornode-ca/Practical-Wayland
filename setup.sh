@@ -15,10 +15,10 @@ for f in $FOLDERS; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
     VAR_VALUE=$(echo $f | cut -d ',' -f 2)
     export $VAR_NAME="$VAR_VALUE"
-    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME=$VAR_VALUE"
+    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 cat << 'EOF' > /opt/kevrevrun/status/files.list
-STAGE=$CFG_DIR/setup.stage
+STAGE,$CFG_DIR/setup.stage
 STATUS,$RUN_DIR/loop.status
 MAIN_LOG,$LOG_DIR/main.log
 USR_ID,$MAIN_DIR/id.usr
@@ -30,7 +30,7 @@ for f in $FILES; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
     VAR_VALUE=$(echo $f | cut -d ',' -f 2)
     export $VAR_NAME="$VAR_VALUE"
-    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME=$VAR_VALUE"
+    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 cat << 'EOF' > values.list
 LOOP,$STATUS
@@ -42,7 +42,7 @@ for v in $($VALUES); do
     FILE=$(echo $v | cut -d ',' -f 2)
     VAR_VALUE=$(cat $v)
     export $VAR_NAME="$VAR_VALUE"
-    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME=$VAR_VALUE"
+    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 gum style --foreground="154" --padding="1 1" "Setup variables loaded successfully"
 cat << EOF > $TMP_DIR/title.tmp
@@ -58,12 +58,12 @@ let x=$COLUMNS y=3 z=x/y
 CTRWIDTH=$z
 let x=$CTRWIDTH y=3 z=x-y
 CENTER=$z
-echo $CENTER > $CFG_DIR/center.value
+echo $CENTER > $RUN_DIR/center.value
 MARGIN="0 $z"
-echo $MARGIN > $CFG_DIR/margin.value
+echo $MARGIN > $RUN_DIR/margin.value
 let x=$COLUMNS y=4  z=x/4
 LEFT=$z
-echo $LEFT > $CFG_DIR/left.value
+echo $LEFT > $RUN_DIR/left.value
 #End: Math for text box sizes
 title () {
 gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --margin="$MARGIN" --width="$CENTER" "KEVREVRUN"
@@ -71,9 +71,7 @@ cat title.tmp | gum style --foreground="154" --border-foreground="208" --border=
 }
 prt_err () {
 gum style --foreground="1" --padding="1 1" "$ERR_MSG"
-gum style --foreground="208" --padding="1 1" "Exit Code: $EXIT -  Check failed.log for details"
-echo  $RN > "$IST_DIR/failed.log"
-gum style --foreground="208" --padding="1 1" "Command output written to failed.log"
+gum style --foreground="208" --padding="1 1" "Exit Code: $EXIT, Check log for details"
 gum style --foreground="154" --padding="1 1" "This script will now exit"
 sleep 2
 exit 1
@@ -87,17 +85,17 @@ first_run () {
 clear
 title
 gum style --foreground="208" --padding="1 1" "Setting up tmux"
-tmux new -s user -d -c $IST_DIR > $MAIN_LOG 2>&1
+tmux new -s user -d -c "$IST_DIR" > $MAIN_LOG 2>&1
 EXIT=$?
 if [ $EXIT != 0 ]; then
     ERR_MSG="Failed to create *user* tmux sessions" | tee -a $MAIN_LOG
     prt_err
 fi
-sudo tmux new -s root -d -c $IST_DIR > $MAIN_LOG 2>&1
+sudo tmux new -s root -d -c "$IST_DIR" > $MAIN_LOG 2>&1
 EXIT=$?
-    if [ $EXIT != 0 ]; then
+if [ $EXIT != 0 ]; then
     ERR_MSG="Failed to create *root* tmux sessions" | tee -a $MAIN_LOG
-prt_err
+    prt_err
 fi
 tmux split-window -v -p 70 -t user:0 > $MAIN_LOG 2>&1
 EXIT=$?
@@ -126,7 +124,7 @@ if [-d "$TMP_DIR" ]; then
     if [ $EXIT != 0 ]; then
 	ERR_MSG="Failed cleaning temporary directory." | tee -a $MAIN_LOG
 	prt_err
-fi
+    fi
     gum style --foreground="154" --padding="1 0" "Cleaning complete"
     sleep 1
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
@@ -157,6 +155,3 @@ sudo tmux attach -t root:0.0
 #sudo tmux kill-server
 }
 first_run
-clear
-title
-read
