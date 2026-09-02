@@ -97,28 +97,28 @@ gum style --foreground="208"  "  Please enter a vailid response..."
 gum input --placeholder=" " --prompt=" Press Enter to retry..." --prompt.foreground="154" --cursor.foreground="208" --no-show-help --padding="1 0"
 }
 gum style --foreground="208" "Setting up tmux"
-tmux new -s user -d -c "$IST_DIR" >> $MAIN_LOG
+tmux new -s user -d -c "$IST_DIR" >> "$MAIN_LOG"
 EXIT=$?
 if [ $EXIT != 0 ]; then
-    ERR_MSG="Failed to create *user* tmux sessions" | tee -a $MAIN_LOG
+    ERR_MSG="Failed to create *user* tmux sessions" | tee -a "$MAIN_LOG"
     prt_err
 fi
-sudo tmux new -s root -d -c "$IST_DIR" >> $MAIN_LOG
+sudo tmux new -s root -d -c "$IST_DIR" >> "$MAIN_LOG"
 EXIT=$?
 if [ $EXIT != 0 ]; then
-    ERR_MSG="Failed to create *root* tmux sessions" | tee -a $MAIN_LOG
+    ERR_MSG="Failed to create *root* tmux sessions" | tee -a "$MAIN_LOG"
     prt_err
 fi
-tmux split-window -v -p 70 -t user:0 >> $MAIN_LOG
+tmux split-window -v -p 70 -t user:0 >> "$MAIN_LOG"
 EXIT=$?
 if [ $EXIT != 0 ]; then
-    ERR_MSG="Failed to send command to tmux session *user*" | tee -a $MAIN_LOG
+    ERR_MSG="Failed to send command to tmux session *user*" | tee -a "$MAIN_LOG"
     prt_err
 fi
-sudo tmux split-window -v -p 70 -t root:0  >> $MAIN_LOG
+sudo tmux split-window -v -p 70 -t root:0  >> "$MAIN_LOG"
 EXIT=$?
 if [ $EXIT != 0 ]; then
-    ERR_MSG="Failed to send command to tmux session *root*" | tee -a $MAIN_LOG
+    ERR_MSG="Failed to send command to tmux session *root*" | tee -a "$MAIN_LOG"
     prt_err
 fi
 sleep 1
@@ -131,10 +131,10 @@ if [ -d "$TMP_DIR" ]; then
     sleep 1
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
     gum style --foreground="208" "Cleaning temporary directory *$TMP_DIR*"
-    rm -rf $TMP_DIR/* >> $MAIN_LOG
+    rm -rf $TMP_DIR/* >> "$MAIN_LOG"
     EXIT=$?
     if [ $EXIT != 0 ]; then
-	ERR_MSG="Failed cleaning temporary directory." | tee -a $MAIN_LOG
+	ERR_MSG="Failed cleaning temporary directory." | tee -a "$MAIN_LOG"
 	prt_err
     fi
     gum style --foreground="154" "Cleaning complete"
@@ -142,10 +142,10 @@ if [ -d "$TMP_DIR" ]; then
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
 else
     gum style --foreground="208" "Creating temporary directory *$TMP_DIR*"
-    mkdir -p $TMP_DIR >> $MAIN_LOG
+    mkdir -p $TMP_DIR >> "$MAIN_LOG"
     EXIT=$?
     if [ $EXIT != 0 ]; then
-	ERR_MSG="Failed to create directory *$TMP_DIR*" | tee -a $MAIN_LOG
+	ERR_MSG="Failed to create directory *$TMP_DIR*" | tee -a "$MAIN_LOG"
 	prt_err
     fi 
     gum style --foreground="154" "Temporary directory *$TMP_DIR* created"
