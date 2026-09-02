@@ -15,8 +15,8 @@ EOF
 if [ -f "$LOG_DIR/main.log" ]; then
     rm -f "$LOG_DIR/main.log"
     touch "$LOG_DIR/main.log"
+    echo "Starting logging" >> "$LOG_DIR/main.log"
 fi
-echo "Starting logging" >> "$LOG_DIR/main.log"
 FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
 for f in $FOLDERS; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
