@@ -8,17 +8,17 @@ cat << 'EOF' > /opt/kevrevrun/status/folders.list
 MAIN_DIR,/opt/kevrevrun
 RUN_DIR,/opt/kevrevrun/status
 SCR_DIR,/opt/kevrevrun/scripts
-NFO_DIR,/opt/kevrevrun/cfg
+CFG_DIR,/opt/kevrevrun/cfg
 DEB_NFO,/opt/kevrevrun/cfg/pkg_lists
 TMP_DIR,/opt/kevrevrun/tmp
+LOG_DIR,/opt/kevrevrun/logs
 EOF
 #if [ -f "$LOG_DIR/main.log" ]; then
 
 #    echo "Starting logging" >> "$LOG_DIR/main.tmp"
 #    else
 #    touch "$LOG_DIR/main.log"
-sudo echo "Starting logging of setup"  > /opt/kevrevrun/setup_msg.tmp
-chown -v kevin:kevin $MAIN_DIR/setup_msg.tmp
+echo "Starting logging of setup"  > /opt/kevrevrun/logs/main.log
 #fi
 FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
 for f in $FOLDERS; do
