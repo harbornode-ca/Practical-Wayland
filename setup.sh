@@ -15,7 +15,7 @@ FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
 for f in $FOLDERS; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
     VAR_VALUE=$(echo $f | cut -d ',' -f 2)
-    export $VAR_NAME="$VAR_VALUE"
+    $VAR_NAME="$VAR_VALUE"
     gum style --foreground="208" --padding="0 1" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 cat << 'EOF' > /opt/kevrevrun/status/files.list
