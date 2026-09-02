@@ -1,32 +1,6 @@
 #!/bin/bash
 gum style --foreground="208" "Starting KEVREVRUN's Wayland Environments Installer..."
 sleep 1
-cat << EOF > /opt/kevrevrun/status/title.tmp
--PRESENTS-
-Practical Debian Wayland Environments
-Install Script
-EOF
-#Start: Math for text box sizes.
-declare -i WIDTH=0 CENTER=0 LEFT=0
-let x=$COLUMNS y=4 z=x-y
-WIDTH=$z
-let x=$COLUMNS y=3 z=x/y
-CTRWIDTH=$z
-let x=$CTRWIDTH y=3 z=x-y
-CENTER=$z
-echo $CENTER > $RUN_DIR/center.value
-MARGIN="0 $z"
-echo $MARGIN > $RUN_DIR/margin.value
-let x=$COLUMNS y=4  z=x/4
-LEFT=$z
-echo $LEFT > $RUN_DIR/left.value
-#End: Math for text box sizes
-title () {
-gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --margin="$MARGIN" --width="$CENTER" "KEVREVRUN"
-cat $RUN_DIR/title.tmp | gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --padding="0 0" --margin="$MARGIN" --width="$CENTER"
-}
-clear
-title
 #Start: Setup Variables
 gum style --foreground="208" --padding="1 0" "Loading setup variables..."
 cat << 'EOF' > /opt/kevrevrun/status/folders.list
@@ -74,7 +48,35 @@ for v in $VALUES; do
     gum style --foreground="208"  "Exported $VAR_NAME with value $VAR_VALUE"
 done
 gum style --foreground="154" --padding="1 0" "Setup variables loaded successfully"
-gum style --foreground="184" --margin="1 1" --strikethrough "           "
+gum style --foreground="208" --padding="1 0" "Pressing Enter to continue..."
+read
+gum style --foreground="208" --padding="1 0" "Loading setup functions..."
+cat << EOF > $RUN_DIR/title.tmp
+-PRESENTS-
+Practical Debian Wayland Environments
+Install Script
+EOF
+#Start: Math for text box sizes.
+declare -i WIDTH=0 CENTER=0 LEFT=0
+let x=$COLUMNS y=4 z=x-y
+WIDTH=$z
+let x=$COLUMNS y=3 z=x/y
+CTRWIDTH=$z
+let x=$CTRWIDTH y=3 z=x-y
+CENTER=$z
+echo $CENTER > $RUN_DIR/center.value
+MARGIN="0 $z"
+echo $MARGIN > $RUN_DIR/margin.value
+let x=$COLUMNS y=4  z=x/4
+LEFT=$z
+echo $LEFT > $RUN_DIR/left.value
+#End: Math for text box sizes
+title () {
+gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --margin="$MARGIN" --width="$CENTER" "KEVREVRUN"
+cat $RUN_DIR/title.tmp | gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --padding="0 0" --margin="$MARGIN" --width="$CENTER"
+}
+clear
+title
 prt_err () {
 gum style --foreground="1"  "$ERR_MSG"
 gum style --foreground="208"  "Exit Code: $EXIT, Check log for details"
