@@ -15,7 +15,7 @@ for f in $FOLDERS; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
     VAR_VALUE=$(echo $f | cut -d ',' -f 2)
     export $VAR_NAME="$VAR_VALUE"
-    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME with value $VAR_VALUE"
+    gum style --foreground="208" --padding="0 1" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 cat << 'EOF' > /opt/kevrevrun/status/files.list
 STAGE,$RUN_DIR/setup.stage
@@ -30,19 +30,19 @@ for f in $FILES; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
     VAR_VALUE=$(echo $f | cut -d ',' -f 2)
     export $VAR_NAME="$VAR_VALUE"
-    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME with value $VAR_VALUE"
+    gum style --foreground="208" --padding="0 1" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 cat << 'EOF' > /opt/kevrevrun/status/values.list
 LOOP,/opt/kevrevrun/status/loop.status
 STEP,/opt/kevrevrun/status/setup.stage
 EOF
 VALUES=$(cat /opt/kevrevrun/status/values.list)
-for v in $($VALUES); do
+for v in $VALUES; do
     VAR_NAME=$(echo $v | cut -d ',' -f 1)
     FILE=$(echo $v | cut -d ',' -f 2)
     VAR_VALUE=$(cat $v)
     export $VAR_NAME="$VAR_VALUE"
-    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME with value $VAR_VALUE"
+    gum style --foreground="208" --padding="0 1" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 gum style --foreground="154" --padding="1 1" "Setup variables loaded successfully"
 cat << EOF > $TMP_DIR/title.tmp
