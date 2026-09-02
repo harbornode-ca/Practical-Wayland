@@ -1,5 +1,5 @@
 #!/bin/bash
-gum style --foreground="208" --padding="0 1" "Starting KEVREVRUN's Wayland Environments Installer..."
+gum style --foreground="208" "Starting KEVREVRUN's Wayland Environments Installer..."
 sleep 1
 cat << EOF > $RUN_DIR/title.tmp
 -PRESENTS-
@@ -44,7 +44,7 @@ for f in $FOLDERS; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
     VAR_VALUE=$(echo $f | cut -d ',' -f 2)
     export $VAR_NAME="$VAR_VALUE"
-    gum style --foreground="208" --padding="0 1" "Exported $VAR_NAME with value $VAR_VALUE"
+    gum style --foreground="208"  "Exported $VAR_NAME with value $VAR_VALUE"
 done
 cat << 'EOF' > /opt/kevrevrun/status/files.list
 STAGE,/opt/kevrevrun/status/setup.stage
@@ -56,7 +56,7 @@ for f in $FILES; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
     VAR_VALUE=$(echo $f | cut -d ',' -f 2)
     export $VAR_NAME="$VAR_VALUE"
-    gum style --foreground="208" --padding="0 1" "Exported $VAR_NAME with value $VAR_VALUE"
+    gum style --foreground="208"  "Exported $VAR_NAME with value $VAR_VALUE"
 done
 cat << 'EOF' > /opt/kevrevrun/status/values.list
 LOOP,/opt/kevrevrun/status/loop.status
@@ -71,7 +71,7 @@ for v in $VALUES; do
     FILE=$(echo $v | cut -d ',' -f 2)
     VAR_VALUE=$(cat $FILE)
     export $VAR_NAME="$VAR_VALUE"
-    gum style --foreground="208" --padding="0 1" "Exported $VAR_NAME with value $VAR_VALUE"
+    gum style --foreground="208"  "Exported $VAR_NAME with value $VAR_VALUE"
 done
 gum style --foreground="154" --padding="1 1" "Setup variables loaded successfully"
 #Start: Math for text box sizes.
@@ -91,15 +91,15 @@ echo $LEFT > $RUN_DIR/left.value
 #End: Math for text box sizes
 
 prt_err () {
-gum style --foreground="1" --padding="1 1" "$ERR_MSG"
-gum style --foreground="208" --padding="1 1" "Exit Code: $EXIT, Check log for details"
+gum style --foreground="1"  "$ERR_MSG"
+gum style --foreground="208"  "Exit Code: $EXIT, Check log for details"
 gum style --foreground="154" --padding="1 1" "This script will now exit"
 sleep 2
 exit 1
 }
 invalid () {
-gum style --foreground="1" --padding="1 1" "  INVAILD RESPONSE ENTERED!"
-gum style --foreground="208" --padding="1 1" "  Please enter a vailid response..."
+gum style --foreground="1"  "  INVAILD RESPONSE ENTERED!"
+gum style --foreground="208"  "  Please enter a vailid response..."
 gum input --placeholder=" " --prompt=" Press Enter to retry..." --prompt.foreground="154" --cursor.foreground="208" --no-show-help --padding="1 1"
 }
 gum style --foreground="208" --padding="1 1" "Setting up tmux"
