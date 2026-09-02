@@ -46,7 +46,7 @@ for v in $VALUES; do
     gum style --foreground="208" --padding="0 1" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 gum style --foreground="154" --padding="1 1" "Setup variables loaded successfully"
-cat << EOF > $TMP_DIR/title.tmp
+cat << EOF > "$TMP_DIR/title.tmp"
 -PRESENTS-
 Practical Debian Wayland Environments
 Install Script
