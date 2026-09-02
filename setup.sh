@@ -38,7 +38,7 @@ DEB_NFO,/opt/kevrevrun/cfg/pkg_lists
 TMP_DIR,/opt/kevrevrun/tmp
 LOG_DIR,/opt/kevrevrun/logs
 EOF
-echo "Starting logging to $LOG_DIR/main.log" > $LOG_DIR/main.log
+echo "Starting logging to $LOG_DIR/main.log" > "$LOG_DIR/main.log"
 FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
 for f in $FOLDERS; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
@@ -117,11 +117,11 @@ gum style --foreground="154" "Sucessfully created tmux sessions"
 sleep 1
 gum style --foreground="184" --margin="1 1" --strikethrough "           "
 if [ -d "$TMP_DIR" ]; then
-    gum style --foreground="154" --padding="1 0" "Temporary directory *$TMP_DIR* already exists"
-    gum style --foreground="208" --padding="1 0" "Skipping directory creation..."
+    gum style --foreground="154" "Temporary directory *$TMP_DIR* already exists"
+    gum style --foreground="208" "Skipping directory creation..."
     sleep 1
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
-    gum style --foreground="208" --padding="1 0" "Cleaning temporary directory *$TMP_DIR*"
+    gum style --foreground="208" "Cleaning temporary directory *$TMP_DIR*"
     rm -rf $TMP_DIR/* >> $MAIN_LOG
     EXIT=$?
     if [ $EXIT != 0 ]; then
