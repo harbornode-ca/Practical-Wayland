@@ -19,7 +19,7 @@ EOF
 #    echo "Starting logging" >> "$LOG_DIR/main.log"
 #    else
 #    touch "$LOG_DIR/main.log"
-echo "Starting logging" >> "$LOG_DIR/main.log"
+echo "Starting logging" >> "$LOG_DIR/main.tmp"
 #fi
 FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
 for f in $FOLDERS; do
