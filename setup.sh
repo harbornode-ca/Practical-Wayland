@@ -14,12 +14,11 @@ TMP_DIR,/opt/kevrevrun/tmp
 LOG_DIR,/opt/kevrevrun/logs
 EOF
 #if [ -f "$LOG_DIR/main.log" ]; then
-#    rm -f "$LOG_DIR/main.log"
-#    touch "$LOG_DIR/main.log"
-#    echo "Starting logging" >> "$LOG_DIR/main.log"
+
+#    echo "Starting logging" >> "$LOG_DIR/main.tmp"
 #    else
 #    touch "$LOG_DIR/main.log"
-cat << 'EOF' > $LOG_DIR/main.log
+cat << 'EOF' > $LOG_DIR/main.tmp
 Starting logging
 EOF
 #fi
