@@ -74,21 +74,7 @@ for v in $VALUES; do
     gum style --foreground="208"  "Exported $VAR_NAME with value $VAR_VALUE"
 done
 gum style --foreground="154" --padding="1 0" "Setup variables loaded successfully"
-#Start: Math for text box sizes.
-declare -i WIDTH=0 CENTER=0 LEFT=0
-let x=$COLUMNS y=4 z=x-y
-WIDTH=$z
-let x=$COLUMNS y=3 z=x/y
-CTRWIDTH=$z
-let x=$CTRWIDTH y=3 z=x-y
-CENTER=$z
-echo $CENTER > $RUN_DIR/center.value
-MARGIN="0 $z"
-echo $MARGIN > $RUN_DIR/margin.value
-let x=$COLUMNS y=4  z=x/4
-LEFT=$z
-echo $LEFT > $RUN_DIR/left.value
-#End: Math for text box sizes
+gum style --foreground="184" --margin="1 1" --strikethrough "           "
 prt_err () {
 gum style --foreground="1"  "$ERR_MSG"
 gum style --foreground="208"  "Exit Code: $EXIT, Check log for details"
@@ -146,14 +132,14 @@ if [ -d "$TMP_DIR" ]; then
     sleep 1
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
 else
-    gum style --foreground="208" --padding="1 0" "Creating temporary directory *$TMP_DIR*"
+    gum style --foreground="208" "Creating temporary directory *$TMP_DIR*"
     mkdir -p $TMP_DIR >> $MAIN_LOG
     EXIT=$?
     if [ $EXIT != 0 ]; then
 	ERR_MSG="Failed to create directory *$TMP_DIR*" | tee -a $MAIN_LOG
 	prt_err
     fi 
-    gum style --foreground="154" --padding="1 0" "Temporary directory *$TMP_DIR* created"
+    gum style --foreground="154" "Temporary directory *$TMP_DIR* created"
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
 fi
 read
