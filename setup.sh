@@ -2,35 +2,44 @@
 #Start: Setup Variables
 gum style --foreground="208" --padding="1 1" "Loading setup variables..."
 cat << 'EOF' > /opt/kevrevrun/status/folders.list
-MAIN_DIR=/opt/kevrevrun
-RUN_DIR=/opt/kevrevrun/status
-SCR_DIR=/opt/kevrevrun/scripts
-NFO_DIR=/opt/kevrevrun/cfg
-DEB_NFO=/opt/kevrevrun/cfg/pkg_lists
-TMP_DIR=/opt/kevrevrun/tmp
-LOG_DIR=/opt/kevrevrun/logs
-MAIN_LOG=$LOG_DIR/main.log
+MAIN_DIR,/opt/kevrevrun
+RUN_DIR,/opt/kevrevrun/status
+SCR_DIR,/opt/kevrevrun/scripts
+NFO_DIR,/opt/kevrevrun/cfg
+DEB_NFO,/opt/kevrevrun/cfg/pkg_lists
+TMP_DIR,/opt/kevrevrun/tmp
+LOG_DIR,/opt/kevrevrun/logs
 EOF
 FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
 for f in $FOLDERS; do
-    VAR_NAME=$(echo $f | cut -d '=' -f 1)
-    VAR_VALUE=$(echo $f | cut -d '=' -f 2)
+    VAR_NAME=$(echo $f | cut -d ',' -f 1)
+    VAR_VALUE=$(echo $f | cut -d ',' -f 2)
     export $VAR_NAME="$VAR_VALUE"
     gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME=$VAR_VALUE"
 done
-cat << 'EOF' > values.list
-USR_ID=$(cat $MAIN_DIR/id.usr)
-USR_NM=$(cat $MAIN_DIR/name.usr)
-IST_DIR=$(cat $MAIN_DIR/install.dir)
-STATUS=$RUN_DIR/loop.status
-LOOP=$(cat $STATUS)
-echo 0 > $CFG_DIR/loop.status
+cat << 'EOF' > /opt/kevrevrun/status/files.list
 STAGE=$CFG_DIR/setup.stage
-STEP=$(cat $STAGE)
+STATUS,$RUN_DIR/loop.status
+MAIN_LOG,$LOG_DIR/main.log
+USR_ID,$MAIN_DIR/id.usr
+USR_NM,$MAIN_DIR/name.usr
+IST_DIR,$MAIN_DIR/install.dir
+EOF
+for f in $FILES; do
+    VAR_NAME=$(echo $f | cut -d ',' -f 1)
+    VAR_VALUE=$(echo $f | cut -d ',' -f 2)
+    export $VAR_NAME="$VAR_VALUE"
+    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME=$VAR_VALUE"
+done
+FILES=$(cat /opt/kevrevrun/status/files.list)
+cat << 'EOF' > values.list
+LOOP,$STATUS
+STEP,$STAGE
 EOF
 for v in $(cat values.list); do
-    VAR_NAME=$(echo $v | cut -d '=' -f 1)
-    VAR_VALUE=$(echo $v | cut -d '=' -f 2)
+    VAR_NAME=$(echo $v | cut -d ',' -f 1)
+    FILE=$(echo $v | cut -d ',' -f 2)
+    VAR_VALUE=$(cat $v)
     export $VAR_NAME="$VAR_VALUE"
     gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME=$VAR_VALUE"
 done
