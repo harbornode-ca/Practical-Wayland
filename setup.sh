@@ -39,6 +39,7 @@ for f in $FILES; do
     export $VAR_NAME="$VAR_VALUE"
     gum style --foreground="208"  "Exported $VAR_NAME with value $VAR_VALUE"
 done
+echo $MAIN_LOG
 cat << 'EOF' > /opt/kevrevrun/status/values.list
 LOOP,/opt/kevrevrun/status/loop.status
 STEP,/opt/kevrevrun/status/setup.stage
