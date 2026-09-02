@@ -36,8 +36,8 @@ cat << 'EOF' > values.list
 LOOP,$STATUS
 STEP,$STAGE
 EOF
-FILES=$(cat /opt/kevrevrun/status/values.list)
-for v in $(cat values.list); do
+VALUES=$(cat /opt/kevrevrun/status/values.list)
+for v in $($VALUES); do
     VAR_NAME=$(echo $v | cut -d ',' -f 1)
     FILE=$(echo $v | cut -d ',' -f 2)
     VAR_VALUE=$(cat $v)
