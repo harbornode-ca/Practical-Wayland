@@ -40,7 +40,7 @@ VALUES=$(cat /opt/kevrevrun/status/values.list)
 for v in $VALUES; do
     VAR_NAME=$(echo $v | cut -d ',' -f 1)
     FILE=$(echo $v | cut -d ',' -f 2)
-    VAR_VALUE=$(cat $v)
+    VAR_VALUE=$(cat $FILE)
     export $VAR_NAME="$VAR_VALUE"
     gum style --foreground="208" --padding="0 1" "Exported $VAR_NAME with value $VAR_VALUE"
 done
