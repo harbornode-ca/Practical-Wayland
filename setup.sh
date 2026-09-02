@@ -132,7 +132,7 @@ if [ -d "$TMP_DIR" ]; then
     sleep 1
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
     gum style --foreground="208" "Cleaning temporary directory *$TMP_DIR*"
-    rm -rfv $TMP_DIR/* >> "$MAIN_LOG" 2>&1
+    rm -rfv $TMP_DIR/* >> $MAIN_LOG
     EXIT=$?
     if [ $EXIT != 0 ]; then
 	ERR_MSG="Failed cleaning temporary directory." | tee -a "$MAIN_LOG"
