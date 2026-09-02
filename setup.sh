@@ -116,7 +116,7 @@ if [ $EXIT != 0 ]; then
     ERR_MSG="Failed to send command to tmux session *user*" | tee -a "$MAIN_LOG"
     prt_err
 fi
-sudo tmux split-window -v -p 70 -t root:0  >> "$MAIN_LOG" 2>&1
+sudo tmux split-window -v -p 70 -t root:0  >> "$MAIN_LOG"
 EXIT=$?
 if [ $EXIT != 0 ]; then
     ERR_MSG="Failed to send command to tmux session *root*" | tee -a "$MAIN_LOG"
@@ -132,7 +132,7 @@ if [ -d "$TMP_DIR" ]; then
     sleep 1
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
     gum style --foreground="208" "Cleaning temporary directory *$TMP_DIR*"
-    rm -rf $TMP_DIR/* >> "$MAIN_LOG"
+    rm -rf $TMP_DIR/* >> "$MAIN_LOG" 2>&1
     EXIT=$?
     if [ $EXIT != 0 ]; then
 	ERR_MSG="Failed cleaning temporary directory." | tee -a "$MAIN_LOG"
