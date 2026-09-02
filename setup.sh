@@ -1,7 +1,7 @@
 #!/bin/bash
 gum style --foreground="208" "Starting KEVREVRUN's Wayland Environments Installer..."
 sleep 1
-cat << EOF > $RUN_DIR/title.tmp
+cat << EOF > /opt/kevrevrun/status/title.tmp
 -PRESENTS-
 Practical Debian Wayland Environments
 Install Script
