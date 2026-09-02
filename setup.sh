@@ -12,14 +12,14 @@ DEB_NFO,/opt/kevrevrun/cfg/pkg_lists
 TMP_DIR,/opt/kevrevrun/tmp
 LOG_DIR,/opt/kevrevrun/logs
 EOF
-if [ -f "$LOG_DIR/main.log" ]; then
-    rm -f "$LOG_DIR/main.log"
-    touch "$LOG_DIR/main.log"
-    echo "Starting logging" >> "$LOG_DIR/main.log"
-    else
-    touch "$LOG_DIR/main.log"
-    echo "Starting logging" >> "$LOG_DIR/main.log"
-fi
+#if [ -f "$LOG_DIR/main.log" ]; then
+#    rm -f "$LOG_DIR/main.log"
+#    touch "$LOG_DIR/main.log"
+#    echo "Starting logging" >> "$LOG_DIR/main.log"
+#    else
+#    touch "$LOG_DIR/main.log"
+echo "Starting logging" >> "$LOG_DIR/main.log"
+#fi
 FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
 for f in $FOLDERS; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
