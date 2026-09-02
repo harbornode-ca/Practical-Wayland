@@ -28,7 +28,7 @@ cat $RUN_DIR/title.tmp | gum style --foreground="154" --border-foreground="208" 
 clear
 title
 #Start: Setup Variables
-gum style --foreground="208" --padding="1 1" "Loading setup variables..."
+gum style --foreground="208" --padding="1 0" "Loading setup variables..."
 cat << 'EOF' > /opt/kevrevrun/status/folders.list
 MAIN_DIR,/opt/kevrevrun
 RUN_DIR,/opt/kevrevrun/status
@@ -73,7 +73,7 @@ for v in $VALUES; do
     export $VAR_NAME="$VAR_VALUE"
     gum style --foreground="208"  "Exported $VAR_NAME with value $VAR_VALUE"
 done
-gum style --foreground="154" --padding="1 1" "Setup variables loaded successfully"
+gum style --foreground="154" --padding="1 0" "Setup variables loaded successfully"
 #Start: Math for text box sizes.
 declare -i WIDTH=0 CENTER=0 LEFT=0
 let x=$COLUMNS y=4 z=x-y
@@ -89,20 +89,19 @@ let x=$COLUMNS y=4  z=x/4
 LEFT=$z
 echo $LEFT > $RUN_DIR/left.value
 #End: Math for text box sizes
-
 prt_err () {
 gum style --foreground="1"  "$ERR_MSG"
 gum style --foreground="208"  "Exit Code: $EXIT, Check log for details"
-gum style --foreground="154" --padding="1 1" "This script will now exit"
+gum style --foreground="154" --padding="1 0" "This script will now exit"
 sleep 2
 exit 1
 }
 invalid () {
 gum style --foreground="1"  "  INVAILD RESPONSE ENTERED!"
 gum style --foreground="208"  "  Please enter a vailid response..."
-gum input --placeholder=" " --prompt=" Press Enter to retry..." --prompt.foreground="154" --cursor.foreground="208" --no-show-help --padding="1 1"
+gum input --placeholder=" " --prompt=" Press Enter to retry..." --prompt.foreground="154" --cursor.foreground="208" --no-show-help --padding="1 0"
 }
-gum style --foreground="208" --padding="1 1" "Setting up tmux"
+gum style --foreground="208" --padding="1 0" "Setting up tmux"
 tmux new -s user -d -c "$IST_DIR" >> $MAIN_LOG
 EXIT=$?
 if [ $EXIT != 0 ]; then
@@ -128,7 +127,7 @@ if [ $EXIT != 0 ]; then
     prt_err
 fi
 sleep 1
-gum style --foreground="154" --padding="1 1" "Sucessfully created tmux sessions"
+gum style --foreground="154" --padding="1 0" "Sucessfully created tmux sessions"
 sleep 1
 gum style --foreground="184" --margin="1 1" --strikethrough "           "
 if [ -d "$TMP_DIR" ]; then
@@ -143,7 +142,7 @@ if [ -d "$TMP_DIR" ]; then
 	ERR_MSG="Failed cleaning temporary directory." | tee -a $MAIN_LOG
 	prt_err
     fi
-    gum style --foreground="154" --padding="1 0" "Cleaning complete"
+    gum style --foreground="154" "Cleaning complete"
     sleep 1
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
 else
