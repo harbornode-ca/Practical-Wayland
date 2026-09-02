@@ -67,7 +67,7 @@ echo $LEFT > $RUN_DIR/left.value
 #End: Math for text box sizes
 title () {
 gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --margin="$MARGIN" --width="$CENTER" "KEVREVRUN"
-cat title.tmp | gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --padding="0 0" --margin="$MARGIN" --width="$CENTER"
+cat $TMP_DIR/title.tmp | gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --padding="0 0" --margin="$MARGIN" --width="$CENTER"
 }
 prt_err () {
 gum style --foreground="1" --padding="1 1" "$ERR_MSG"
@@ -84,25 +84,25 @@ gum input --placeholder=" " --prompt=" Press Enter to retry..." --prompt.foregro
 clear
 title
 gum style --foreground="208" --padding="1 1" "Setting up tmux"
-tmux new -s user -d -c "$IST_DIR" > $MAIN_LOG 2>&1
+tmux new -s user -d -c "$IST_DIR" 2>&1 >> $MAIN_LOG
 EXIT=$?
 if [ $EXIT != 0 ]; then
     ERR_MSG="Failed to create *user* tmux sessions" | tee -a $MAIN_LOG
     prt_err
 fi
-sudo tmux new -s root -d -c "$IST_DIR" > $MAIN_LOG 2>&1
+sudo tmux new -s root -d -c "$IST_DIR" 2>&1 >> $MAIN_LOG
 EXIT=$?
 if [ $EXIT != 0 ]; then
     ERR_MSG="Failed to create *root* tmux sessions" | tee -a $MAIN_LOG
     prt_err
 fi
-tmux split-window -v -p 70 -t user:0 > $MAIN_LOG 2>&1
+tmux split-window -v -p 70 -t user:0 2>&1 >> $MAIN_LOG
 EXIT=$?
 if [ $EXIT != 0 ]; then
     ERR_MSG="Failed to send command to tmux session *user*" | tee -a $MAIN_LOG
     prt_err
 fi
-sudo tmux split-window -v -p 70 -t root:0  > $MAIN_LOG 2>&1
+sudo tmux split-window -v -p 70 -t root:0  2>&1 >> $MAIN_LOG
 EXIT=$?
 if [ $EXIT != 0 ]; then
     ERR_MSG="Failed to send command to tmux session *root*" | tee -a $MAIN_LOG
@@ -118,7 +118,7 @@ if [-d "$TMP_DIR" ]; then
     sleep 1
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
     gum style --foreground="208" --padding="1 0" "Cleaning temporary directory *$TMP_DIR*"
-    rm -rf $TMP_DIR/* > $MAIN_LOG 2>&1
+    rm -rf $TMP_DIR/* 2>&1 >> $MAIN_LOG
     EXIT=$?
     if [ $EXIT != 0 ]; then
 	ERR_MSG="Failed cleaning temporary directory." | tee -a $MAIN_LOG
@@ -129,7 +129,7 @@ if [-d "$TMP_DIR" ]; then
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
 else
     gum style --foreground="208" --padding="1 0" "Creating temporary directory *$TMP_DIR*"
-    mkdir -p $TMP_DIR > $MAIN_LOG 2>&1
+    mkdir -p $TMP_DIR 2>&1 >> $MAIN_LOG
     EXIT=$?
     if [ $EXIT != 0 ]; then
 	ERR_MSG="Failed to create directory *$TMP_DIR*" | tee -a $MAIN_LOG
