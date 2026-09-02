@@ -101,7 +101,7 @@ gum style --foreground="1"  "  INVAILD RESPONSE ENTERED!"
 gum style --foreground="208"  "  Please enter a vailid response..."
 gum input --placeholder=" " --prompt=" Press Enter to retry..." --prompt.foreground="154" --cursor.foreground="208" --no-show-help --padding="1 0"
 }
-gum style --foreground="208" --padding="1 0" "Setting up tmux"
+gum style --foreground="208" "Setting up tmux"
 tmux new -s user -d -c "$IST_DIR" >> $MAIN_LOG
 EXIT=$?
 if [ $EXIT != 0 ]; then
@@ -127,7 +127,7 @@ if [ $EXIT != 0 ]; then
     prt_err
 fi
 sleep 1
-gum style --foreground="154" --padding="1 0" "Sucessfully created tmux sessions"
+gum style --foreground="154" "Sucessfully created tmux sessions"
 sleep 1
 gum style --foreground="184" --margin="1 1" --strikethrough "           "
 if [ -d "$TMP_DIR" ]; then
