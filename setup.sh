@@ -132,7 +132,8 @@ else
     EXIT=$?
     if [ $EXIT != 0 ]; then
 	ERR_MSG="Failed to create directory *$TMP_DIR*" | tee -a $MAIN_LOG
-	prt_err    
+	prt_err
+    fi 
     gum style --foreground="154" --padding="1 0" "Temporary directory *$TMP_DIR* created"
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
 fi
