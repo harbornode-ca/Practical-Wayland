@@ -81,7 +81,6 @@ gum style --foreground="1" --padding="1 1" "  INVAILD RESPONSE ENTERED!"
 gum style --foreground="208" --padding="1 1" "  Please enter a vailid response..."
 gum input --placeholder=" " --prompt=" Press Enter to retry..." --prompt.foreground="154" --cursor.foreground="208" --no-show-help --padding="1 1"
 }
-clear
 title
 gum style --foreground="208" --padding="1 1" "Setting up tmux"
 tmux new -s user -d -c "$IST_DIR" 2>&1 >> $MAIN_LOG
