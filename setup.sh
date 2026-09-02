@@ -25,17 +25,18 @@ USR_ID,$MAIN_DIR/id.usr
 USR_NM,$MAIN_DIR/name.usr
 IST_DIR,$MAIN_DIR/install.dir
 EOF
+FILES=$(cat /opt/kevrevrun/status/files.list)
 for f in $FILES; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
     VAR_VALUE=$(echo $f | cut -d ',' -f 2)
     export $VAR_NAME="$VAR_VALUE"
     gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME=$VAR_VALUE"
 done
-FILES=$(cat /opt/kevrevrun/status/files.list)
 cat << 'EOF' > values.list
 LOOP,$STATUS
 STEP,$STAGE
 EOF
+FILES=$(cat /opt/kevrevrun/status/values.list)
 for v in $(cat values.list); do
     VAR_NAME=$(echo $v | cut -d ',' -f 1)
     FILE=$(echo $v | cut -d ',' -f 2)
