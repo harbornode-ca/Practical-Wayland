@@ -18,7 +18,7 @@ EOF
 #    echo "Starting logging" >> "$LOG_DIR/main.tmp"
 #    else
 #    touch "$LOG_DIR/main.log"
-cat << 'EOF' > $LOG_DIR/main.tmp
+cat << 'EOF' > $LOG_DIR/setup_msg.tmp
 Starting logging
 EOF
 #fi
