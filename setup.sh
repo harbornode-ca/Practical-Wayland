@@ -81,7 +81,6 @@ gum style --foreground="1" --padding="1 1" "  INVAILD RESPONSE ENTERED!"
 gum style --foreground="208" --padding="1 1" "  Please enter a vailid response..."
 gum input --placeholder=" " --prompt=" Press Enter to retry..." --prompt.foreground="154" --cursor.foreground="208" --no-show-help --padding="1 1"
 }
-first_run () {
 clear
 title
 gum style --foreground="208" --padding="1 1" "Setting up tmux"
@@ -151,7 +150,5 @@ sudo tmux send-keys -t root:0.1 "$IST_DIR/02-crew.sh" Enter
 gum style --foreground="154" --margin="1 1" "Press Enter when you are ready to continue..."
 read
 sudo tmux attach -t root:0.0
-#tmux kill-server
-#sudo tmux kill-server
-}
-first_run
+tmux kill-server
+sudo tmux kill-server
