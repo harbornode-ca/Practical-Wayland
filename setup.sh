@@ -4,6 +4,21 @@ cat << EOF > $RUN_DIR/title.tmp
 Practical Debian Wayland Environments
 Install Script
 EOF
+#Start: Math for text box sizes.
+declare -i WIDTH=0 CENTER=0 LEFT=0
+let x=$COLUMNS y=4 z=x-y
+WIDTH=$z
+let x=$COLUMNS y=3 z=x/y
+CTRWIDTH=$z
+let x=$CTRWIDTH y=3 z=x-y
+CENTER=$z
+echo $CENTER > $RUN_DIR/center.value
+MARGIN="0 $z"
+echo $MARGIN > $RUN_DIR/margin.value
+let x=$COLUMNS y=4  z=x/4
+LEFT=$z
+echo $LEFT > $RUN_DIR/left.value
+#End: Math for text box sizes
 title () {
 gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --margin="$MARGIN" --width="$CENTER" "KEVREVRUN"
 cat $RUN_DIR/title.tmp | gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --padding="0 0" --margin="$MARGIN" --width="$CENTER"
