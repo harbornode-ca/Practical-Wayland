@@ -17,7 +17,7 @@ EOF
 #    echo "Starting logging" >> "$LOG_DIR/main.tmp"
 #    else
 #    touch "$LOG_DIR/main.log"
-sudo echo "Starting logging of setup"  > $MAIN_DIR/setup_msg.tmp
+sudo echo "Starting logging of setup"  > /opt/kevrevrun/setup_msg.tmp
 chown -v kevin:kevin $MAIN_DIR/setup_msg.tmp
 #fi
 FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
