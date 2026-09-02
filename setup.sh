@@ -46,7 +46,7 @@ for v in $VALUES; do
     gum style --foreground="208" --padding="0 1" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 gum style --foreground="154" --padding="1 1" "Setup variables loaded successfully"
-cat << EOF > "$TMP_DIR/title.tmp"
+cat << EOF > $RUN_DIR/title.tmp
 -PRESENTS-
 Practical Debian Wayland Environments
 Install Script
@@ -68,7 +68,7 @@ echo $LEFT > $RUN_DIR/left.value
 #End: Math for text box sizes
 title () {
 gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --margin="$MARGIN" --width="$CENTER" "KEVREVRUN"
-cat $TMP_DIR/title.tmp | gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --padding="0 0" --margin="$MARGIN" --width="$CENTER"
+cat $RUN_DIR/title.tmp | gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --padding="0 0" --margin="$MARGIN" --width="$CENTER"
 }
 prt_err () {
 gum style --foreground="1" --padding="1 1" "$ERR_MSG"
