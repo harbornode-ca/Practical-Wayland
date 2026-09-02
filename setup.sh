@@ -111,7 +111,7 @@ sleep 1
 gum style --foreground="154" --padding="1 1" "Sucessfully created tmux sessions"
 sleep 1
 gum style --foreground="184" --margin="1 1" --strikethrough "           "
-if [-d "$TMP_DIR" ]; then
+if [ -d "$TMP_DIR" ]; then
     gum style --foreground="154" --padding="1 0" "Temporary directory *$TMP_DIR* already exists"
     gum style --foreground="208" --padding="1 0" "Skipping directory creation..."
     sleep 1
