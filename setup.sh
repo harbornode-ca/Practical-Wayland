@@ -18,7 +18,7 @@ for f in $FOLDERS; do
     gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 cat << 'EOF' > /opt/kevrevrun/status/files.list
-STAGE,$CFG_DIR/setup.stage
+STAGE,$RUN_DIR/setup.stage
 STATUS,$RUN_DIR/loop.status
 MAIN_LOG,$LOG_DIR/main.log
 USR_ID,$MAIN_DIR/id.usr
@@ -33,8 +33,8 @@ for f in $FILES; do
     gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 cat << 'EOF' > /opt/kevrevrun/status/values.list
-LOOP,$STATUS
-STEP,$STAGE
+LOOP,/opt/kevrevrun/status/loop.status
+STEP,/opt/kevrevrun/status/setup.stage
 EOF
 VALUES=$(cat /opt/kevrevrun/status/values.list)
 for v in $($VALUES); do
