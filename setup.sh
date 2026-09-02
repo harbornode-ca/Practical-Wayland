@@ -1,4 +1,15 @@
 #!/bin/bash
+cat << EOF > $RUN_DIR/title.tmp
+-PRESENTS-
+Practical Debian Wayland Environments
+Install Script
+EOF
+title () {
+gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --margin="$MARGIN" --width="$CENTER" "KEVREVRUN"
+cat $RUN_DIR/title.tmp | gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --padding="0 0" --margin="$MARGIN" --width="$CENTER"
+}
+clear
+title
 #Start: Setup Variables
 gum style --foreground="208" --padding="1 1" "Loading setup variables..."
 cat << 'EOF' > /opt/kevrevrun/status/folders.list
@@ -10,7 +21,7 @@ DEB_NFO,/opt/kevrevrun/cfg/pkg_lists
 TMP_DIR,/opt/kevrevrun/tmp
 LOG_DIR,/opt/kevrevrun/logs
 EOF
-echo "Starting logging to $LOG_DIR/main.log"
+echo "Starting logging to $LOG_DIR/main.log" > $LOG_DIR/main.log
 FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
 for f in $FOLDERS; do
     VAR_NAME=$(echo $f | cut -d ',' -f 1)
@@ -46,11 +57,6 @@ for v in $VALUES; do
     gum style --foreground="208" --padding="0 1" "Exported $VAR_NAME with value $VAR_VALUE"
 done
 gum style --foreground="154" --padding="1 1" "Setup variables loaded successfully"
-cat << EOF > $RUN_DIR/title.tmp
--PRESENTS-
-Practical Debian Wayland Environments
-Install Script
-EOF
 #Start: Math for text box sizes.
 declare -i WIDTH=0 CENTER=0 LEFT=0
 let x=$COLUMNS y=4 z=x-y
@@ -66,10 +72,7 @@ let x=$COLUMNS y=4  z=x/4
 LEFT=$z
 echo $LEFT > $RUN_DIR/left.value
 #End: Math for text box sizes
-title () {
-gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --margin="$MARGIN" --width="$CENTER" "KEVREVRUN"
-cat $RUN_DIR/title.tmp | gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --padding="0 0" --margin="$MARGIN" --width="$CENTER"
-}
+
 prt_err () {
 gum style --foreground="1" --padding="1 1" "$ERR_MSG"
 gum style --foreground="208" --padding="1 1" "Exit Code: $EXIT, Check log for details"
