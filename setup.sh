@@ -32,7 +32,7 @@ for f in $FILES; do
     export $VAR_NAME="$VAR_VALUE"
     gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME with value $VAR_VALUE"
 done
-cat << 'EOF' > values.list
+cat << 'EOF' > /opt/kevrevrun/status/values.list
 LOOP,$STATUS
 STEP,$STAGE
 EOF
