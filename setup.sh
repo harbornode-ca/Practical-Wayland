@@ -1,11 +1,24 @@
 #!/bin/bash
-# Setup Variables. Added to every file for consistancy.
+#Start: Setup Variables
+gum style --foreground="208" --padding="1 1" "Loading setup variables..."
+cat << 'EOF' > /opt/kevrevrun/status/folders.list
 MAIN_DIR=/opt/kevrevrun
 RUN_DIR=/opt/kevrevrun/status
 SCR_DIR=/opt/kevrevrun/scripts
 NFO_DIR=/opt/kevrevrun/cfg
 DEB_NFO=/opt/kevrevrun/cfg/pkg_lists
 TMP_DIR=/opt/kevrevrun/tmp
+LOG_DIR=/opt/kevrevrun/logs
+MAIN_LOG=$LOG_DIR/main.log
+EOF
+FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
+for f in $FOLDERS; do
+    VAR_NAME=$(echo $f | cut -d '=' -f 1)
+    VAR_VALUE=$(echo $f | cut -d '=' -f 2)
+    export $VAR_NAME="$VAR_VALUE"
+    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME=$VAR_VALUE"
+done
+cat << 'EOF' > values.list
 USR_ID=$(cat $MAIN_DIR/id.usr)
 USR_NM=$(cat $MAIN_DIR/name.usr)
 IST_DIR=$(cat $MAIN_DIR/install.dir)
@@ -14,11 +27,20 @@ LOOP=$(cat $STATUS)
 echo 0 > $CFG_DIR/loop.status
 STAGE=$CFG_DIR/setup.stage
 STEP=$(cat $STAGE)
-cat << EOF > title.txt
+EOF
+for v in $(cat values.list); do
+    VAR_NAME=$(echo $v | cut -d '=' -f 1)
+    VAR_VALUE=$(echo $v | cut -d '=' -f 2)
+    export $VAR_NAME="$VAR_VALUE"
+    gum style --foreground="208" --padding="1 0" "Exported $VAR_NAME=$VAR_VALUE"
+done
+gum style --foreground="154" --padding="1 1" "Setup variables loaded successfully"
+cat << EOF > $TMP_DIR/title.tmp
 -PRESENTS-
 Practical Debian Wayland Environments
 Install Script
 EOF
+#Start: Math for text box sizes.
 declare -i WIDTH=0 CENTER=0 LEFT=0
 let x=$COLUMNS y=4 z=x-y
 WIDTH=$z
@@ -32,6 +54,7 @@ echo $MARGIN > $CFG_DIR/margin.value
 let x=$COLUMNS y=4  z=x/4
 LEFT=$z
 echo $LEFT > $CFG_DIR/left.value
+#End: Math for text box sizes
 title () {
 gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --margin="$MARGIN" --width="$CENTER" "KEVREVRUN"
 cat title.tmp | gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --padding="0 0" --margin="$MARGIN" --width="$CENTER"
@@ -51,10 +74,62 @@ gum style --foreground="208" --padding="1 1" "  Please enter a vailid response..
 gum input --placeholder=" " --prompt=" Press Enter to retry..." --prompt.foreground="154" --cursor.foreground="208" --no-show-help --padding="1 1"
 }
 first_run () {
-RN=$(tmux new -s user -d -c $IST_DIR)
-RN=$(sudo tmux new -s root -d -c $IST_DIR)
-RN=$(tmux split-window -v -p 70 -t user:0)
-RN=$(sudo tmux split-window -v -p 70 -t root:0)
+clear
+title
+gum style --foreground="208" --padding="1 1" "Setting up tmux"
+tmux new -s user -d -c $IST_DIR > $MAIN_LOG 2>&1
+EXIT=$?
+if [ $EXIT != 0 ]; then
+    ERR_MSG="Failed to create *user* tmux sessions" | tee -a $MAIN_LOG
+    prt_err
+fi
+sudo tmux new -s root -d -c $IST_DIR > $MAIN_LOG 2>&1
+EXIT=$?
+    if [ $EXIT != 0 ]; then
+    ERR_MSG="Failed to create *root* tmux sessions" | tee -a $MAIN_LOG
+prt_err
+fi
+tmux split-window -v -p 70 -t user:0 > $MAIN_LOG 2>&1
+EXIT=$?
+if [ $EXIT != 0 ]; then
+    ERR_MSG="Failed to send command to tmux session *user*" | tee -a $MAIN_LOG
+    prt_err
+fi
+sudo tmux split-window -v -p 70 -t root:0  > $MAIN_LOG 2>&1
+EXIT=$?
+if [ $EXIT != 0 ]; then
+    ERR_MSG="Failed to send command to tmux session *root*" | tee -a $MAIN_LOG
+    prt_err
+fi
+sleep 1
+gum style --foreground="154" --padding="1 1" "Sucessfully created tmux sessions"
+sleep 1
+gum style --foreground="184" --margin="1 1" --strikethrough "           "
+if [-d "$TMP_DIR" ]; then
+    gum style --foreground="154" --padding="1 0" "Temporary directory *$TMP_DIR* already exists"
+    gum style --foreground="208" --padding="1 0" "Skipping directory creation..."
+    sleep 1
+    gum style --foreground="184" --margin="1 1" --strikethrough "           "
+    gum style --foreground="208" --padding="1 0" "Cleaning temporary directory *$TMP_DIR*"
+    rm -rf $TMP_DIR/* > $MAIN_LOG 2>&1
+    EXIT=$?
+    if [ $EXIT != 0 ]; then
+	ERR_MSG="Failed cleaning temporary directory." | tee -a $MAIN_LOG
+	prt_err
+fi
+    gum style --foreground="154" --padding="1 0" "Cleaning complete"
+    sleep 1
+    gum style --foreground="184" --margin="1 1" --strikethrough "           "
+else
+    gum style --foreground="208" --padding="1 0" "Creating temporary directory *$TMP_DIR*"
+    mkdir -p $TMP_DIR > $MAIN_LOG 2>&1
+    EXIT=$?
+    if [ $EXIT != 0 ]; then
+	ERR_MSG="Failed to create directory *$TMP_DIR*" | tee -a $MAIN_LOG
+	prt_err    
+    gum style --foreground="154" --padding="1 0" "Temporary directory *$TMP_DIR* created"
+    gum style --foreground="184" --margin="1 1" --strikethrough "           "
+fi
 clear
 title
 gum style --foreground="208" --bold --margin="1 1" "Welcome to KEVREVRUN's Wayland Environments Installer"
@@ -66,7 +141,7 @@ gum style --foreground="184" --margin="0 1" "install process giving feedback on 
 sudo tmux send-keys -t root:0.0 "$IST_DIR/01-crew.sh" Enter
 sudo tmux send-keys -t root:0.1 "$IST_DIR/02-crew.sh" Enter
 gum style --foreground="154" --margin="1 1" "Press Enter when you are ready to continue..."
-read -p " "
+read
 sudo tmux attach -t root:0.0
 #tmux kill-server
 #sudo tmux kill-server
@@ -74,4 +149,4 @@ sudo tmux attach -t root:0.0
 first_run
 clear
 title
-read -p ""
+read
