@@ -1,5 +1,6 @@
 #!/bin/bash
 gum style --foreground="208" "Starting KEVREVRUN's Wayland Environments Installer..."
+chmod -R 775 /opt/kevrevrun
 sleep 1
 #Start: Setup Variables
 gum style --foreground="208" --padding="1 0" "Loading setup variables..."
