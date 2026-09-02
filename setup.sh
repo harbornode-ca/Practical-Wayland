@@ -2,13 +2,13 @@
 #Start: Setup Variables
 gum style --foreground="208" --padding="1 1" "Loading setup variables..."
 cat << 'EOF' > /opt/kevrevrun/status/folders.list
-MAIN_DIR,"/opt/kevrevrun"
-RUN_DIR,"/opt/kevrevrun/status"
-SCR_DIR,"/opt/kevrevrun/scripts"
-NFO_DIR,"/opt/kevrevrun/cfg"
-DEB_NFO,"/opt/kevrevrun/cfg/pkg_lists"
-TMP_DIR,"/opt/kevrevrun/tmp"
-LOG_DIR,"/opt/kevrevrun/logs"
+MAIN_DIR,/opt/kevrevrun
+RUN_DIR,/opt/kevrevrun/status
+SCR_DIR,/opt/kevrevrun/scripts
+NFO_DIR,/opt/kevrevrun/cfg
+DEB_NFO,/opt/kevrevrun/cfg/pkg_lists
+TMP_DIR,/opt/kevrevrun/tmp
+LOG_DIR,/opt/kevrevrun/logs
 EOF
 echo "Starting logging to $LOG_DIR/main.log"
 FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
