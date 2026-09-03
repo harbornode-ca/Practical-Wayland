@@ -7,7 +7,13 @@
 - warn
 - error
 - fatal
+- #
 
+## Log Formats
+- json
+- logfmt
+- 
+text
 
 ## Date Formatting
 
