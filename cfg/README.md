@@ -1,0 +1,3 @@
+## Config Folder -cfg
+
+The folder for everything related to configuration. I'll try to keep it organized...

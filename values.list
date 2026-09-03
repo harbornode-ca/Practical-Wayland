@@ -1,8 +1,0 @@
-USR_ID=$(cat $MAIN_DIR/id.usr)
-USR_NM=$(cat $MAIN_DIR/name.usr)
-IST_DIR=$(cat $MAIN_DIR/install.dir)
-STATUS=$RUN_DIR/loop.status
-LOOP=$(cat $STATUS)
-echo 0 > $CFG_DIR/loop.status
-STAGE=$CFG_DIR/setup.stage
-STEP=$(cat $STAGE)

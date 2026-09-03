@@ -18,7 +18,13 @@ EOF
 #    echo "Starting logging" >> "$LOG_DIR/main.tmp"
 #    else
 #    touch "$LOG_DIR/main.log"
-echo "Starting logging of setup"  > /opt/kevrevrun/logs/main.log
+echo "Log file for KEVREVRUN Practical Wayland Setup"  > /opt/kevrevrun/logs/main.log
+echo "Starting logging" > /opt/kevrevrun/logs/main.log
+DATE=$(date -u)
+echo "UTC: $DATE" > /opt/kevrevrun/logs/main.log
+DATE=$(date)
+echo "Local: $DATE" > /opt/kevrevrun/logs/main.log
+
 #fi
 FOLDERS=$(cat /opt/kevrevrun/status/folders.list)
 for f in $FOLDERS; do
@@ -132,7 +138,7 @@ if [ -d "$TMP_DIR" ]; then
     sleep 1
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
     gum style --foreground="208" "Cleaning temporary directory *$TMP_DIR*"
-    rm -rfv $TMP_DIR/* >> $MAIN_LOG
+    rm -rfv $TMP_DIR/* 2>&1 >> $MAIN_LOG
     EXIT=$?
     if [ $EXIT != 0 ]; then
 	ERR_MSG="Failed cleaning temporary directory." | tee -a "$MAIN_LOG"
@@ -143,7 +149,7 @@ if [ -d "$TMP_DIR" ]; then
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
 else
     gum style --foreground="208" "Creating temporary directory *$TMP_DIR*"
-    mkdir -p $TMP_DIR >> "$MAIN_LOG"
+    mkdir -p $TMP_DIR >> "$LOG_DIR/main.log"
     EXIT=$?
     if [ $EXIT != 0 ]; then
 	ERR_MSG="Failed to create directory *$TMP_DIR*" | tee -a "$MAIN_LOG"
