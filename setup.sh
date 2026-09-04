@@ -1,7 +1,9 @@
 #!/bin/bash
-# ************************
-# * Initial setup section*
-# ************************
+
+# ******************************
+# * Start Initial setup section*
+# ******************************
+clear
 gum style --foreground="184" --margin="1 1" --strikethrough "           "
 gum style --foreground="208" "Starting KEVREVRUN's Wayland Environments Installer..."
 echo "Starting Logging of KEVREVRUN's Wayland Environments Installer" > log.tmp
@@ -10,24 +12,25 @@ chmod -Rv 775 /opt/kevrevrun >> log.tmp
 sleep 1
 gum style --foreground="184" --margin="1 1" --strikethrough "           "
 gum style --foreground="208" --padding="0 0" "Loading setup variables..."
+gum style --foreground="184" --margin="1 1" --strikethrough "           "
 sleep 1
 
 # Creating folders.list for pulling variables in other scripts
-# START: Creating folder.list
+# START: Creating folders.list
 cat << 'EOF' > /opt/kevrevrun/status/folders.list
 mainDir,/opt/kevrevrun
-cfgDir,/opt/kevrevrun/status
+statusDir,/opt/kevrevrun/status
 scriptDir,/opt/kevrevrun/scripts
 cfgDir,/opt/kevrevrun/cfg
 aptDir,/opt/kevrevrun/cfg/pkg_lists
 tmpDir,/opt/kevrevrun/tmp
 logDir,/opt/kevrevrun/logs
 EOF
-# END: Creating folder.list
+# END: Creating folders.list
 
 echo "File /opt/kevrevrun/status/folders.list has been created" >> log.tmp
 
-# Exporting folder.list variables to current script
+# Exporting folders.list variables to current script
 # START: Creating folders.list
 fldrList=$(cat /opt/kevrevrun/status/folders.list)
 for f in $fldrList; do
@@ -38,7 +41,7 @@ for f in $fldrList; do
 	echo "Exported Variable $varName with the Value $varValue" >> log.tmp
 	logMsg=$(echo $f)
 done
-# END: Creating folder.list
+# END: Creating folders.list
 
 # Renaming previous log files.
 # START: Renaming old log files
@@ -52,7 +55,7 @@ fi
 # Setting up information logging function
 # START: Info logging function
 infoLog () {
-gum log --formatter="logfmt" --level="info" --time="rfc3339" --file="$logDir/main.log"  "$logMsg"
+gum log --formatter="logfmt" --level="info" --time="rfc3339" --file="$logDir/main.log" "$logMsg"
 }
 # END: Info logging function
 
@@ -63,7 +66,7 @@ infoLog
 # Adds tmp.log to current logfile
 # START: Logging log.tmp
 while IFS= read -r tmpLog; do
-	printf  -v LOG '%s' "$tmpLog"
+	printf  -v logMsg '%s' "$tmpLog"
 	infoLog
 done < log.tmp
 # END: Logging log.tmp
@@ -80,7 +83,7 @@ EOF
 logMsg="File /opt/kevrevrun/status/files.list created"
 infoLog
 
-# Exporting folder.list variables to current script
+# Exporting folders.list variables to current script
 # START: Creating folders.list
 varFiles=$(cat /opt/kevrevrun/status/files.list)
 for f in $varFiles; do
@@ -119,18 +122,17 @@ for v in $valueList; do
 done
 # END: Creating values.list
 
-# ************************
-# * Initial setup section*
-# ************************
-
-gum style --foreground="154" "Completed loading setup variables!"
 gum style --foreground="184" --margin="1 1" --strikethrough "           "
+gum style --foreground="154" "Completed loading setup variables!"
 logMsg="All variable completed loading"
 infoLog
-gum style --foreground="208" --padding="0 0" "Press Enter to continue..."
-# Pause before continuing
-read
+#gum style --foreground="208" --padding="0 0" "Press Enter to continue..."
+#read
 
+# ****************************
+# * End initial setup section*
+# ****************************
+# ---
 # *************************
 # *Functions Section Start*
 # *************************
@@ -143,13 +145,14 @@ Practical Debian Wayland Environments
 Install Script
 EOF
 
+gum style --foreground="208" "Calculating screen dimensions"
 # START: Math for text box sizes.
 declare -i scrWidth=0 scrCenter=0 scrLeft=0
 let x=$COLUMNS y=4 z=x-y
 scrWidth=$z
 let x=$COLUMNS y=3 z=x/y
-CTRscrWidth=$z
-let x=$CTRWIDTH y=3 z=x-y
+scrThird=$z
+let x=$scrThird y=3 z=x-y
 scrCenter=$z
 echo $scrCenter > $cfgDir/center.value
 scrMargin="0 $z"
@@ -158,7 +161,9 @@ let x=$COLUMNS y=4  z=x/4
 scrLeft=$z
 echo $scrLeft > $cfgDir/left.value
 # END: Math for text box sizes
-
+gum style --foreground="154" "Completed calculations for onscreen elements"
+echo
+gum style --foreground="208" "Adding essential functions"
 # START: Title function
 title () {
 gum style --foreground="154" --border-foreground="208" --border="rounded" --align="center" --bold --margin="$scrMargin" --width="$scrCenter" "KEVREVRUN"
@@ -185,36 +190,37 @@ gum style --foreground="208"  "  Please enter a vailid response..."
 gum input --placeholder=" " --prompt=" Press Enter to retry..." --prompt.foreground="154" --cursor.foreground="208" --no-show-help --padding="1 0"
 }
 # END: Invalid response function
+gum style --foreground="208" "Completed loading functions"
+echo
 gum style --foreground="154" --padding="1 0" "Completed initializing setup!"
 gum style --foreground="184" --margin="1 1" --strikethrough "           "
 
 # ***********************
 # *Functions Section End*
 # ***********************
-
+# ---
 # ***********************
 # *Checking System Start*
 # ***********************
-clear
 title
 gum style --foreground="184" --margin="1 1" --strikethrough "           "
-gum style --foreground="208" "Checking for if *$tmpDir* directory exists"
+gum style --foreground="208" "Checking for if $tmpDir directory exists"
 if [ -d "$tmpDir" ]; then
-    gum style --foreground="154" "Temporary directory *$tmpDir* already exists"
-	logMsg="Temporary directory *$tmpDir* already exists"
+    gum style --foreground="154" "Temporary directory already exists"
+	logMsg="Temporary directory already exists"
 	infoLog
     gum style --foreground="208" "Skipping directory creation..."
     sleep 1
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
-    gum style --foreground="208" "Checking if *$tmpDir* is empty..."
+    gum style --foreground="208" "Checking if temporary directory is empty..."
+	tmpList=$(ls | wc -l)
     if [ "$(ls -A $tmpDir)" ]; then
-		gum style --foreground="208" "Temporary directory *$tmpDir* already contians files"
-		gum style --foreground="208" "Cleaning temporary directory *$tmpDir* ..."
-		logMsg="Deleting all files from tmp directory $tmpDir..."
+		gum style --foreground="208" "Temporary directory already contians files"
+		gum style --foreground="208" "Cleaning temporary directory"
+		logMsg="Deleting existing files in directory"
 		infoLog
-		rm -rf "$tmpDir/*" 2&1 > "$logMsg"
+		rm -fv $tmpDir/* > "$logMsg"
 	    exitCode=$?
-		infoLog
 		gum style --foreground="154" "Cleaning complete"
 		sleep 1
 		gum style --foreground="184" --margin="1 1" --strikethrough "           "
@@ -229,24 +235,59 @@ if [ -d "$tmpDir" ]; then
 	fi
 else
     gum style --foreground="208" "Temporary directory does not exist"
-	gum style --foreground="208" "Creating temporary directory *$tmpDir*"
+	gum style --foreground="208" "Creating temporary directory $tmpDir"
     mkdir -pv $tmpDir >> $logMsg
     exitCode=$?
-    if [ $exitCode != 0 ]; then
-	errMsg="Failed to create directory *$tmpDir*"
-	prtErr
+    infoLog
+	if [ $exitCode != 0 ]; then
+		errMsg="Failed to create directory $tmpDir"
+		prtErr
     fi
-    gum style --foreground="154" "Temporary directory *$tmpDir* created"
+    gum style --foreground="154" "Temporary directory $tmpDir created"
     gum style --foreground="184" --margin="1 1" --strikethrough "           "
 fi
 
-gum style --foreground="208" --padding="0 0" "TODO LIST!!!"
+# START: Reading folders.list
+gum style --foreground="208" "Confirming folder setup..."
 gum style --foreground="184" --margin="1 1" --strikethrough "           "
+#$mainDir $statusDir $scriptDir $cfgDir $aptDir $tmpDir $logDir
+chkFldr=$(cat $statusDir/folders.list | cut -d ',' -f 2)
+for f in $chkFldr; do
+		gum style --foreground="208" --padding="0 0" "Checking for folder $f"
+	if [ -d $f ]; then
+		gum style --foreground="154" --padding="0 0" "The folder $f is present"
+		logMsg="Folder $f is present"
+		infoLog
+	else
+		gum style --foreground="208" --padding="0 0" "The folder $f is not present"
+		gum style --foreground="208" --padding="0 0" "Creating folder"
+	    mkdir -pv $tmpDir >> $logMsg
+		exitCode=$?
+		if [ $exitCode != 0 ]; then
+			errMsg="Failed to create directory $f"
+			prtErr
+    	fi
+		gum style --foreground="154" --padding="0 0" "Created folder $f"
+	fi
+done
+gum style --foreground="184" --margin="1 1" --strikethrough "           "
+gum style --foreground="208" "Downloading Practical Wayland Repository..."
+#wget -O $tmpDir/practical-wayland.zip https://github.com/harbornode-ca/Practical-Wayland/archive/refs/heads/main.zip
+wget -o $logDir/wget0.log -O $tmpDir/practical-wayland.zip https://github.com/harbornode-ca/Practical-Wayland/archive/refs/heads/main.zip
+exitCode=$?
+logMsg="wget log saved to wget0.log"
+infoLog
+if [ $exitCode != 0 ]; then
+	errMsg="Failed to download required files"
+	prtErr
+fi
+if [ -f $tmpDir/practical-wayland.zip ]; then
+	gum style --foreground="154" "Download suceeded"
+fi
+
 cat << 'EOF'
- - Setup checking setup step
- - Add logic for setup step
- - Check folders exist
- - Download .zip file
+ - Extract zip
+ - Create all needed repo files for quickly changing enabled repositories
  - Move files to proper folders
  - Update system - Pass off to other script
  - Options menu for user to choose environment
@@ -256,5 +297,3 @@ cat << 'EOF'
  - Setup "preloaded" software
  - Add flatpak support, add repo, set theme
 EOF
-gum style --foreground="184" --margin="1 1" --strikethrough "           "
-read
