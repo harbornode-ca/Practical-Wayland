@@ -1,5 +1,6 @@
 #!/bin/bash
 # Creates a file that contains all folder used in the installation
+"cfg" "status" "scripts" "tmp" "logs" "cfg/pkg_lists"
 cat << 'EOF' > /opt/kevrevrun/status/folders.list
 mainDir,/opt/kevrevrun
 statusDir,/opt/kevrevrun/status
