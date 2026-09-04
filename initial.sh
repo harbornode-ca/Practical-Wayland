@@ -24,7 +24,7 @@ echo "  $errMsg"
 echo
 echo "  exit Code: $exit -  Check failed.log for details"
 echo  $run > ./failed.log
-sleep 1Techo
+sleep 1
 echo "  Output saved to failed.log"
 echo
 echo "  This script will now exit"
@@ -40,11 +40,13 @@ read -p "  Press Enter to retry"
 }
 # Add sudo priviledges to a user
 add_sudo () {
+echo
 echo "  Gathering user information"
 sleep 1
 echo
 echo "  Enter the username of user to be given sudo permission below"
 read -p "  > " sudoUser
+echo
 echo "  Checking if $sudoUser is a valid user"
 sleep 1
 chkSudoUser=$(cat /etc/passwd | grep -c $sudoUser)
@@ -201,7 +203,7 @@ if [ -d $cfgDir ]; then
 	sleep 1
 else
 	run=$(mkdir $cfgDir 2>&1)
-	if T -f $cfgDir ]; then
+	if -f $cfgDir ]; then
 		echo
 		echo "  The config directory has been created"
 		sleep 1
@@ -238,7 +240,7 @@ sleep 1
 echo
 echo "  Getting user details"
 sleep 1
-usrName $sudoUser
+usrName=$sudoUser
 usrID=$(cat /etc/passwd | grep $usrName | cut -d ":" -f 3)
 sleep 1
 echo
@@ -257,6 +259,7 @@ if [ $usrOwner = $usrName ]; then
 		prt_err
 	fi
 fi
+echo
 echo "  Downloading script to continue setup..."
 sleep 1
 run=$(wget -O "/home $sudoUser/setup.sh" "https://raw.githubusercontent.com/harborunode-ca/kevrevrun-deb/refs/heads/main/setup.sh" 2>&1)
@@ -271,7 +274,7 @@ fi
 echo
 echo "  Setting file permissions..."
 sleep 1
-run=$(chown $sudoUser /home $sudoUser/setup.sh && chmod +x /home $sudoUser/setup.sh)
+run=$(chown $sudoUser:$sudoUser /home/$sudoUser/setup.sh && chmod +x /home/$sudoUser/setup.sh 2>&1)
 exit=$?
 if [ $exit != 0 ]; then
 	errMsg="Failed to set file/folder permissions"
