@@ -4,12 +4,12 @@ IST_DIR=$PWD
 echo $IST_DIR > $CFG_DIR/install.dir
 banner () {
 echo
-echo "  *-------------------------------------------------------------------------*"
+echo "  ---------------------------------------------------------------------------"
 echo "  |                            *** KEVREVRUN ***                            |"
 echo "  |                               * Presents *                              |"
 echo "  |                  In association with Crappy-Bash-Scripts                |"
 echo "  |                   Practical Debian Wayland Environments                 |"
-echo "  *-------------------------------------------------------------------------*"
+echo "  ---------------------------------------------------------------------------"
 echo
 echo
 sleep 1
@@ -19,9 +19,9 @@ sleep 1
 prt_err () {
 clear
 banner
-echo "  *----------*"
+echo "  ------------"
 echo "  |  ERROR!  |"
-echo "  *----------*"
+echo "  ------------"
 echo
 echo "  $ERR_MSG"
 echo
@@ -38,16 +38,14 @@ invalid () {
 clear
 banner
 echo "  INVAILD RESPONSE ENTERED!"
-echo
 echo "  Please enter a vailid response"
-echo
 read -p "  Press Enter to retry"
 }
 add_sudo () {
 echo
-echo "  *---------------------*"
+echo "  -----------------------"
 echo "  |  Setting Sudo User  |"
-echo "  *---------------------*"
+echo "  -----------------------"
 sleep 1
 echo
 echo "  Gathering user information"
@@ -71,14 +69,13 @@ else
 	echo
 	echo "  Please verify that the user entered is correct."
 	add_sudo
-
 fi
 }
 chk_sudo () {
 echo
-echo "  *----------------------*"
+echo "  ------------------------"
 echo "  |  Creating Sudo User  |"
-echo "  *----------------------*"
+echo "  ------------------------"
 sleep 1
 echo
 echo "  Do you want to give $SUDO_USER root priviledges [y/n]"
@@ -127,11 +124,11 @@ if [ "$EUID" != 0 ]; then
 	echo "  *** IMPORTANT ***"
 	echo "  *****************"
 	echo
-	echo "  *------------------------------------------------------*"
+	echo "  --------------------------------------------------------"
 	echo "  | Error: Root access not detected!                     |"
 	echo "  | Login as root and re-run this script.                |"
 	echo "  | *Note: Debian does not setup a sudo user by default* |"
-	echo "  *------------------------------------------------------*"
+	echo "  --------------------------------------------------------"
 	echo
 	echo "  *****************"
 	echo "  *** IMPORTANT ***"
@@ -152,9 +149,9 @@ fi
 clear
 banner
 echo
-echo "  *--------------------------------------* "
+echo "  ---------------------------------------- "
 echo "  |  Installing Updates & Need Packages  | "
-echo "  *--------------------------------------* "
+echo "  ---------------------------------------- "
 sleep 1
 echo
 echo "  Refreshing the package cache... "
@@ -206,9 +203,9 @@ else
 fi
 add_sudo
 echo
-echo "  *------------------------------------*"
+echo "  --------------------------------------"
 echo "  |  Setting Up Directories and Files  |"
-echo "  *------------------------------------*"
+echo "  --------------------------------------"
 echo
 echo "  Configuring setup files..."
 sleep 1
@@ -320,9 +317,9 @@ echo
 echo "  Finished setting up files and directories"
 sleep 1
 echo
-echo "  *-------------------------------------*"
+echo "  ---------------------------------------"
 echo "  |  Installing Charmbracelet Gum Tool  |"
-echo "  *-------------------------------------*"
+echo "  ---------------------------------------"
 echo
 # Downloading the Gum .deb installer
 echo "  Downloading Gum... "
@@ -358,9 +355,9 @@ read -p "  Press Enter to continue"
 clear
 banner
 echo
-echo " *-------------------*"
+echo " ---------------------"
 echo " |  Setup Completed  |"
-echo " *-------------------*"
+echo " ---------------------"
 sleep 1
 echo
 echo
