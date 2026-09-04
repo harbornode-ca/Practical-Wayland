@@ -5,7 +5,7 @@
 # ******************************
 clear
 gum style --foreground="184" --margin="1 1" --strikethrough "           "
-gum style --foreground="208" "Starting KEVREVRUN's Wayland Environments Installer..."
+gum style --foreground="208" "Starting Kevrevrun's Wayland Environments Installer..."
 echo "Starting Logging of KEVREVRUN's Wayland Environments Installer" > log.tmp
 # Making sure correct file permission for /opt/kevrevrun
 chmod -Rv 775 /opt/kevrevrun >> log.tmp
