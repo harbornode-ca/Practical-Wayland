@@ -50,3 +50,7 @@
 ## AI Package
 
 *Placeholder for software list for AI applications*
+
+## Games Package
+
+*Placeholder for software list for Games*
