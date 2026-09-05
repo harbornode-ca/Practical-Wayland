@@ -3,70 +3,55 @@
 ## Directories
 
 1. /opt/kevrevrun
-	- CFG_DIR
-2. /opt/kevrevrun/repos
-	- DEB_DIR
+	- mainDir
 3. /opt/kevrevrun/status
-	- RUN_DIR
+	- statusDir
 4. /opt/kevrevrun/setup
-	- SET_DIR	
+	- cfgDir
 5. /opt/kevrevrun/scripts
-	- SCR_DIR
-6. /opt/kevrevrun/configs
-	- NFO_DIR
+	- scriptDir
+6. /opt/kevrevrun/pkg_lists
+	- aptDir
+7. /opt/kevrevrun/tmp
+	- tmpDir
+8. /opt/kevrevrun/logs
+	- logDir
 
 # Status Files
 
 1. id.usr
-	- in CFG_DIR
+	- in mainDir
 	- Created in initial.sh
-	- Var: USR_ID
+	- Var: usrId
 2. name.usr
-	- in CFG_DIR
+	- in mainDir
 	- Created in initial.sh
-	- Var: USR_NM
+	- Var: usrName
 3. loop.status
-	- in RUN_DIR
-	- Created in setup.sh
-	- Var: STATUS
+	- in statusDir
+	- Created in initial.sh
+	- Var: loopStat
 4. install.dir
-	- in RUN_DIR
-	- Created in setup.sh 
-	- Var: IST_DIR
-5. center.value
-	- in RUN_DIR
-	- Created in setup.sh
-	- Var: CENTER
-6. margin.value
-	- in RUN_DIR
-	- Created in setup.sh
-	- Var: MARGIN
-7. left.value
-	- in RUN_DIR
-	- Created in setup.sh
-	- Var: $LEFT
-8. setup.stage
-	- in RUN_DIR
-	- Created in setup.sh
-	- STAGE
+	- in statusDir
+	- Created in initial.sh
+	- Var: setupDir
+5. setup.stage
+	- in statusDir
+	- Created in initial.sh
+	- Var: nowStep
 
 # Temporary Files
 
-1. title.tmp
-	- Stored in IST_DIR
-	- Stores double lines box text
-2. output.tmp
-	- Stored in IST_DIR
-	- Stores APT output
+*No temporary files used in this script*
 
 # Variables
 
-1. CFG_DIR=/opt/kevrevrun
-2. USR_ID=$(cat $CFG_DIR/id.usr)
-3. USR_NM=$(cat $CFG_DIR/name.usr)
-4. IST_DIR=$(cat $CFG_DIR/install.dir)
-5. CENTER=$(cat $RUN_DIR/center.value)
-6. MARGIN=$(cat $RUN_DIR/margin.value)
-7. LEFT=$(cat $RUN_DIR/left.value)
-8. STATUS=$(cat $RUN_DIR/loop.status)
-9. $STAGE=$(cat $RUN_DIR/setup.stage)
+1. mainDir=/opt/kevrevrun
+2. statusDir=/opt/kevrevrun/status
+3. scriptDir=/opt/kevrevrun/scripts
+4. cfgDir=/opt/kevrevrun/cfg
+5. usrId=$(cat $CFG_DIR/id.usr)
+6. usrName=$(cat $CFG_DIR/name.usr)
+7. setupDir=$(cat $CFG_DIR/install.dir)
+8. loopStat=$(cat $CFG_DIR/loop.status)
+9. nowStep=$(cat $CFG_DIR/setup.stage)

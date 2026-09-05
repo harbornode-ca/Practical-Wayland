@@ -212,7 +212,7 @@ else
 		prt_err
 	fi
 fi
-for f in "cfg" "status" "scripts" "tmp" "logs" "cfg/pkg_lists"; do
+for f in "cfg" "status" "scripts" "tmp" "logs"; do
 	if [ -d $cfgDir/$f ]; then
 		echo
 		echo "  The directory $f already exists"
@@ -234,31 +234,6 @@ for f in "cfg" "status" "scripts" "tmp" "logs" "cfg/pkg_lists"; do
 		fi
 	fi
 done
-echo
-echo "  Setting up user file permissions"
-sleep 1
-echo
-echo "  Getting user details"
-sleep 1
-usrName=$sudoUser
-usrID=$(cat /etc/passwd | grep $usrName | cut -d ":" -f 3)
-sleep 1
-echo
-echo "  Setting file permissions"
-sleep 1
-run=$(chown -R $usrName:$usrName $cfgDir)
-usrOwner=$(ls -ld $cfgDir | cut -d " " -f 3)
-usrGroup=$(ls -ld $cfgDir | cut -d " " -f 4)
-if [ $usrOwner = $usrName ]; then
-	if [ $usrGroup = $usrName ]; then
-		echo
-		echo "  File permission have been properly set"
-		sleep 1
-	else
-		errMsg="  Failed to set file permissions"
-		prt_err
-	fi
-fi
 echo
 echo "  Downloading script to continue setup..."
 sleep 1
@@ -288,8 +263,10 @@ echo "  Saving some information for the next steps of the installation..."
 sleep 1
 id -u $sudoUser > $cfgDir/id.usr
 echo $sudoUser > $cfgDir/name.usr
-if [ -f  /etc/kevrevrun/id.usr ]; then
-	if [ -f  /etc/kevrevrun/name.usr ]; then
+echo 0 > $cfgDir/status/setup.stage
+echo 0 > $cfgDir/status/loop.status
+for f in "$cfgDir/id.usr" "$cfgDir/name.usr" "$cfgDir/status/setup.stage" "$cfgDir/status/loop.status"; do
+	if [ -f  $f ]; then
 		echo
 		echo "  Finished saving information"
 		sleep 1
@@ -297,14 +274,38 @@ if [ -f  /etc/kevrevrun/id.usr ]; then
 		errMsg="Failed to create files"
 		prt_err
 	fi
-fi
+done
 echo
 echo "  Finished setting up files and directories"
 sleep 1
 echo
+echo "  Setting up user file permissions"
+sleep 1
+echo
+echo "  Getting user details"
+sleep 1
+usrName=$sudoUser
+usrID=$(cat /etc/passwd | grep $usrName | cut -d ":" -f 3)
+sleep 1
+echo
+echo "  Setting file permissions"
+sleep 1
+run=$(chown -R $usrName:$usrName $cfgDir)
+usrOwner=$(ls -ld $cfgDir | cut -d " " -f 3)
+usrGroup=$(ls -ld $cfgDir | cut -d " " -f 4)
+if [ $usrOwner = $usrName ]; then
+	if [ $usrGroup = $usrName ]; then
+		echo
+		echo "  File permission have been properly set"
+		sleep 1
+	else
+		errMsg="  Failed to set file permissions"
+		prt_err
+	fi
+fi
+echo
 echo "  Installing Charmbracelet Gum Tool"
 echo
-# Downloading the Gum .deb installer
 echo "  Downloading Gum... "
 sleep 1
 gumUrl=" https://github.com/charmbracelet/gum/releases/download/v0.17.0/gum_0.17.0_amd64.deb"
@@ -316,8 +317,8 @@ if [ ! -f /tmp/$gumDeb ]; then
         prt_err
 else
 	echo
-        echo "  Download was sucessful!"
-        sleep 1
+    echo "  Download was sucessful!"
+    sleep 1
 fi
 # Installing Gum .deb file using apt
 echo
@@ -341,9 +342,7 @@ echo
 echo "  Setup Completed"
 sleep 1
 echo
-echo
 echo "  *** IMPORTANT ***"
-echo
 echo
 echo "  [Instructions]"
 echo "  - The setup.sh files has been added to the home directory of $sudoUser"

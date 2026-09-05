@@ -1,11 +1,11 @@
 #!/bin/bash
 # Confirms and creates initial directories if missing.
-for folder in "cfg" "status" "scripts" "tmp" "logs" "cfg/pkg_lists"; do
+for folder in "cfg" "status" "scripts" "tmp" "logs"; do
     if [ ! -d "/opt/kevrevrun/$folder" ]; then
         mkdir -v /opt/kevrevrun/$folder
     fi
 done
-for folder in "cfg" "status" "scripts" "tmp" "logs" "cfg/pkg_lists"; do
+for folder in "cfg" "status" "scripts" "tmp" "logs"; do
     if [ ! -d "/opt/kevrevrun/$folder" ]; then
         echo "Error: Directory $folder not found"  
         exit 1
@@ -19,7 +19,6 @@ mainDir,/opt/kevrevrun
 statusDir,/opt/kevrevrun/status
 scriptDir,/opt/kevrevrun/scripts
 cfgDir,/opt/kevrevrun/cfg
-aptDir,/opt/kevrevrun/cfg/pkg_lists
 tmpDir,/opt/kevrevrun/tmp
 logDir,/opt/kevrevrun/logs
 EOF
