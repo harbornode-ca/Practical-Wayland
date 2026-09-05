@@ -2,7 +2,6 @@
 
 Pre-configured repository files that can be copied from to change active and inactive repositories.
 
-### Why?
+When running Debian Testing it's very likely you'll run into a package that has a broken dependency. This is where this folder comes in. You can quickly enable and disable repositories to install the package you need. Whether that is pulling it from Stable/Backport or Sid. These files will be used by the updating script to try and resolve the broken dependency.
 
-This project is based on Debian Testing, currently Forky, and sometimes the testing repositories will not have a dependancy that is required to install a package.
-This leaves one with the option of downgrading through stable or trying from sid. Unstable like the character.
+This is not implemented yet. However the installer gives the user the option to upgrade to Debian Forky. This provides files to quickly build .sources files when updating to Forky.
