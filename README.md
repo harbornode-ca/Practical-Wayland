@@ -28,7 +28,7 @@ The initial.sh script is run as root on a base install of Debian. So Debian with
 
 ## Current Development of Proposed Features:
 
-[] Setup Scripts:
+Setup Scripts
   [x] Initial Script Setup.
   [] Update system to Debian Testing.
   [] Install script for Niri DE.
@@ -42,15 +42,15 @@ The initial.sh script is run as root on a base install of Debian. So Debian with
   [] AI Package Software installer script
   [] Dev Package Software installer script
   [] Install script for Installing themes.
-[] Tools and utilities:
+Tools and utilities
   [] Setup a custom script for each environment for updating system packages.
   [] Setup a custom script for each environment for installing extra software.
   [] Package installer and uninstaller script. Featuring advanced dependency handling and orphaned package cleanup.
   [] Keybind visual editor.
-[] Themes
+Themes
   [] Installation of themes.
   [] Custom themes for each environment.
-  [] Custom Themes:
+Custom Themes
     [] A retro 70's/80's with Commodore 64, Atari inspired colors. I am calling it "That 70's Theme"
     [] A nature inspired theme w/ Tom Thomson style colors. I am calling it "Muskoka Colors"
     [] A Doctor Who inspired theme. Obviously called "Doctor Who"
