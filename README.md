@@ -92,7 +92,7 @@ The initial.sh script is run as root on a base install of Debian. So Debian with
 
 ## License
 
-MIT License
+GNU General Public License v3.0
 
 Copyright (c) 2026 Kevrevrun
 
