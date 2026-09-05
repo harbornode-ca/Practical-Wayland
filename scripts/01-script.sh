@@ -26,9 +26,7 @@ EOF
 fldrList=$(cat /opt/kevrevrun/status/folders.list)
 for f in $fldrList; do
     varName=$(echo $f | cut -d ',' -f 1)
-    echo "Variable Name: $varName"
     varValue=$(echo $f | cut -d ',' -f 2)
-    echo "Variable Value: $varValue"
     export $varName="$varValue" 2>&1
 done
 # Creates file that contains all files that hold a status across scripts and reboots.
@@ -41,9 +39,7 @@ EOF
 varFiles=$(cat /opt/kevrevrun/status/files.list)
 for v in $varFiles; do
     varName=$(echo $v | cut -d ',' -f 1)
-    echo "Variable Name: $varName"
     varValue=$(echo $v | cut -d ',' -f 2)
-    echo "Variable Value: $varValue"
     export $varName="$varValue"
 done
 # Creates a file that allows the saved variables to be called into the current script
@@ -58,11 +54,8 @@ EOF
 valueList=$(cat /opt/kevrevrun/status/values.list)
 for v in $valueList; do
     varName=$(echo $v | cut -d ',' -f 1)
-    echo "Variable Name: $varName"
     fileName=$(echo $v | cut -d ',' -f 2)
-    echo "File Name: $fileName"
     varValue=$(cat $fileName)
-    echo "Variable Value: $varValue"
     export $varName="$varValue"
 done
 #Checks if temporary directory exists and is empty
@@ -79,7 +72,6 @@ done
 destFldr="$scriptDir $cfgDir"
 for f in $destFldr; do
     srcFldr=$(echo $f | cut -d '/' -f 4)
-    echo $srcFldr
     cp -Rv ./Practical-Wayland-main/$srcFldr/* $f
 done
 #Cleaning up Practical Wayland files
