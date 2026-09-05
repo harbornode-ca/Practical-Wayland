@@ -1,6 +1,6 @@
 ## APT Repository Files
 
-Pre-configured repository files that can be copied to change active and inactive repositories.
+Pre-configured repository files that can be copied from to change active and inactive repositories.
 
 ### Why?
 
