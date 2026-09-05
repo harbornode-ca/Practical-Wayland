@@ -30,32 +30,32 @@ The initial.sh script is run as root on a base install of Debian. So Debian with
 
 Setup Scripts
   [x] Initial Script Setup.
-  [] Update system to Debian Testing.
-  [] Install script for Niri DE.
-  [] Install script for Cosmic DE.
-  [] Install script for Noctalia V5.
-  [] Install script for LXQt w/ Niri for Compositor.
-  [] Add CLI for install scripts.
-  [] WinApps installer implementation of dockur for Windows Apps on Linux.
-  [] Base system apps installation script
-  [] Gaming Package Software installer script
-  [] AI Package Software installer script
-  [] Dev Package Software installer script
-  [] Install script for Installing themes.
+  [ ] Update system to Debian Testing.
+  [ ] Install script for Niri DE.
+  [ ] Install script for Cosmic DE.
+  [ ] Install script for Noctalia V5.
+  [ ] Install script for LXQt w/ Niri for Compositor.
+  [ ] Add CLI for install scripts.
+  [ ] WinApps installer implementation of dockur for Windows Apps on Linux.
+  [ ] Base system apps installation script
+  [ ] Gaming Package Software installer script
+  [ ] AI Package Software installer script
+  [ ] Dev Package Software installer script
+  [ ] Install script for Installing themes.
 Tools and utilities
-  [] Setup a custom script for each environment for updating system packages.
-  [] Setup a custom script for each environment for installing extra software.
-  [] Package installer and uninstaller script. Featuring advanced dependency handling and orphaned package cleanup.
-  [] Keybind visual editor.
+  [ ] Setup a custom script for each environment for updating system packages.
+  [ ] Setup a custom script for each environment for installing extra software.
+  [ ] Package installer and uninstaller script. Featuring advanced dependency handling and orphaned package cleanup.
+  [ ] Keybind visual editor.
 Themes
-  [] Installation of themes.
-  [] Custom themes for each environment.
+  [ ] Installation of themes.
+  [ ] Custom themes for each environment.
 Custom Themes
-    [] A retro 70's/80's with Commodore 64, Atari inspired colors. I am calling it "That 70's Theme"
-    [] A nature inspired theme w/ Tom Thomson style colors. I am calling it "Muskoka Colors"
-    [] A Doctor Who inspired theme. Obviously called "Doctor Who"
-    [] A Modern Dark theme. Simply called "Dark"
-    [] A Modern Light theme. Simply called "Light"
+    [ ] A retro 70's/80's with Commodore 64, Atari inspired colors. I am calling it "That 70's Theme"
+    [ ] A nature inspired theme w/ Tom Thomson style colors. I am calling it "Muskoka Colors"
+    [ ] A Doctor Who inspired theme. Obviously called "Doctor Who"
+    [ ] A Modern Dark theme. Simply called "Dark"
+    [ ] A Modern Light theme. Simply called "Light"
 
 ## Installing
 
