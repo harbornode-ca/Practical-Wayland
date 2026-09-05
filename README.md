@@ -104,4 +104,3 @@ Special thanks to the developers of the Wayland desktop project I am featuring a
 7. Xwayland-Satellite - X11 Support for Niri. Used in Niri and lxqt-niri implementation.
 8. The whole Noctalia Project! V5 is looking really good. (Umbriel, Noctalia, Greeter)
 9. lxqt - Awesome Qt Desktop Environment. The basic for the Niri Qt Implementation.
-10. 
