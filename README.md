@@ -28,34 +28,49 @@ The initial.sh script is run as root on a base install of Debian. So Debian with
 
 ## Current Development of Proposed Features:
 
-Setup Scripts
-  [x] Initial Script Setup.
-  [ ] Update system to Debian Testing.
-  [ ] Install script for Niri DE.
-  [ ] Install script for Cosmic DE.
-  [ ] Install script for Noctalia V5.
-  [ ] Install script for LXQt w/ Niri for Compositor.
-  [ ] Add CLI for install scripts.
-  [ ] WinApps installer implementation of dockur for Windows Apps on Linux.
-  [ ] Base system apps installation script
-  [ ] Gaming Package Software installer script
-  [ ] AI Package Software installer script
-  [ ] Dev Package Software installer script
-  [ ] Install script for Installing themes.
-Tools and utilities
-  [ ] Setup a custom script for each environment for updating system packages.
-  [ ] Setup a custom script for each environment for installing extra software.
-  [ ] Package installer and uninstaller script. Featuring advanced dependency handling and orphaned package cleanup.
-  [ ] Keybind visual editor.
-Themes
-  [ ] Installation of themes.
-  [ ] Custom themes for each environment.
-Custom Themes
-    [ ] A retro 70's/80's with Commodore 64, Atari inspired colors. I am calling it "That 70's Theme"
-    [ ] A nature inspired theme w/ Tom Thomson style colors. I am calling it "Muskoka Colors"
-    [ ] A Doctor Who inspired theme. Obviously called "Doctor Who"
-    [ ] A Modern Dark theme. Simply called "Dark"
-    [ ] A Modern Light theme. Simply called "Light"
+###Setup Scripts
+
+| Completed | Implementation |
+|-----------|----------------|
+| Yes | Initial Script Setup. |
+| Partial | Update system to Debian Testing. |
+| No | Install script for Niri DE. |
+| No | Install script for Cosmic DE. |
+| No | Install script for Noctalia V5. |
+| No | Install script for LXQt w/ Niri for Compositor.|
+| No | Add CLI for install scripts. |
+| No | WinApps installer implementation of dockur for Windows Apps on Linux. |
+| No | Base system apps installation script |
+| No | Gaming Package Software installer script |
+| No | AI Package Software installer script |
+| No | Dev Package Software installer script |
+| No | Install script for Installing themes. |
+
+###Tools and utilities
+
+| Completed | Implementation |
+|-----------|----------------|
+| Partial | Setup a custom script for each environment for updating system packages. |
+| No | Setup a custom script for each environment for installing extra software.
+| No | Package installer and uninstaller script. Featuring advanced dependency handling and orphaned package cleanup.
+| No | Keybind visual editor.
+
+###Themes
+
+| Completed | Implementation |
+|-----------|----------------|
+| No | Installation of themes.
+| No | Custom themes for each environment.
+
+###Custom Themes
+
+| Completed | Implementation |
+|-----------|----------------|
+| No | A retro 70's/80's with Commodore 64, Atari inspired colors. I am calling it "That 70's Theme"
+| No | A nature inspired theme w/ Tom Thomson style colors. I am calling it "Muskoka Colors"
+| No |  A Doctor Who inspired theme. Obviously called "Doctor Who"
+| No |  A Modern Dark theme. Simply called "Dark"
+| No |  A Modern Light theme. Simply called "Light"
 
 ## Installing
 
