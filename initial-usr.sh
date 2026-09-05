@@ -34,7 +34,7 @@ for f in $fldrList; do
 done
 # Creates file that contains all files that hold a status across scripts and reboots.
 cat << 'EOF' > /opt/kevrevrun/status/files.list
-stageFile,/opt/kevrevrun/setup.stage
+stageFile,/opt/kevrevrun/status/setup.stage
 statusFile,/opt/kevrevrun/status/loop.status
 mainLog,/opt/kevrevrun/logs/main.log
 EOF
@@ -50,7 +50,7 @@ done
 # Creates a file that allows the saved variables to be called into the current script
 cat << 'EOF' > /opt/kevrevrun/status/values.list
 loopStat,/opt/kevrevrun/status/loop.status
-nowStep,/opt/kevrevrun/setup.stage
+nowStep,/opt/kevrevrun/status/setup.stage
 usrId,/opt/kevrevrun/id.usr
 usrName,/opt/kevrevrun/name.usr
 setupDir,/opt/kevrevrun/install.dir
@@ -72,12 +72,12 @@ if [ -f $tmpDir/practical-wayland.zip ]; then
     unzip $tmpDir/practical-wayland.zip
 fi
 #Move files from the installation directory to Main directory
-destFldr="$statusDir $scriptDir $cfgDir"
+destFldr="$scriptDir $cfgDir"
 for f in $destFldr; do
     echo $f
     rm -rvf $f/*
 done
-destFldr="$statusDir $scriptDir $cfgDir"
+destFldr="$scriptDir $cfgDir"
 for f in $destFldr; do
     srcFldr=$(echo $f | cut -d '/' -f 4)
     echo $srcFldr
