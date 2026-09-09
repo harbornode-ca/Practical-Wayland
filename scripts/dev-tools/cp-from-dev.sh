@@ -8,5 +8,5 @@ done
 destFldr="/opt/kevrevrun/scripts /opt/kevrevrun/cfg"
 for f in $destFldr; do
     srcFldr=$(echo $f | cut -d '/' -f 4)
-    cp -Rv $HOME/Practical-Wayland/$srcFldr/* $f
+    cp -Rv $HOME/practical-wayland/$srcFldr/* $f
 done
