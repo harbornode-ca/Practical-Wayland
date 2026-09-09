@@ -39,7 +39,7 @@ numUpdates=$(cat output.tmp | grep "packages can be upgraded" | cut -d ' ' -f 1)
 if [ $chkUpgrades != 0 ]; then
     echo "There are $numUpdates upgrades available..."
     echo "Installing upgrades"
-    sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y
+    DEBIAN_FRONTEND=noninteractive apt upgrade -y
 else
     echo "System already up to date..."
     echo

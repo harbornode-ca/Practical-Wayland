@@ -13,4 +13,8 @@ case $setupStg in
     "1")
     stage2
         ;;
+    *)
+    wget -O/opt/kevrevrun/scripts/01-script.sh https://raw.githubusercontent.com/harbornode-ca/practical-wayland/refs/heads/main/scripts/01-script.sh
+    chmod +x /opt/kevrevrun/scripts/01-script.sh
+    /opt/kevrevrun/scripts/01-script.sh
 esac
