@@ -1,2 +1,2 @@
-# practical-wayland
-Practical installer for Wayland Environments on Debian!
+# Practical Wayland
+A practical installer for Wayland Environments on Debian!
