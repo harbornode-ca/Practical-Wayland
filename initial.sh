@@ -40,7 +40,7 @@ echo "Gathering user information"
 sleep 1
 echo
 echo "Enter the username of user to be given sudo permission below"
-read -p "  > " sudoUser
+read -p "> " sudoUser
 echo
 echo "Checking if $sudoUser is a valid user"
 sleep 1
@@ -48,7 +48,7 @@ chkSudoUser=$(cat /etc/passwd | grep -c $sudoUser)
 sleep 1
 if [ "$chkSudoUser" = "1" ]; then
 	echo
-	echo "  $sudoUser is a valid user!"
+	echo "$sudoUser is a valid user!"
 	sleep 1
 	chk_sudo
 else
@@ -66,7 +66,7 @@ echo "Creating Sudo User"
 sleep 1
 echo
 echo "Do you want to give $sudoUser root priviledges [y/n]"
-read -p "  > " confirm
+read -p "> " confirm
 if [ "$confirm" = "y" ]; then
 	echo
 	echo "Root priviledges will be given to $sudoUser..."
@@ -146,7 +146,7 @@ else
 	echo
 	echo "The package cache has updated sucessfully"
 fi
-chkUpdates=$(apt update | grep -c "packages can be upgraded")
+chkUpdates=$(apt update | grep -c "packages can be upgraded" 2>&1)
 if [ $chkUpdates = 1 ]; then
 	echo
 	echo "Updates are available."
@@ -202,7 +202,7 @@ if [ -d $cfgDir ]; then
 	sleep 1
 else
 	echo
-	mkdir $cfgDir 2>&1
+	mkdir -v $cfgDir 2>&1
 	if [ -d $cfgDir ]; then
 		echo
 		echo "The config directory has been created"
@@ -224,7 +224,7 @@ for f in "cfg" "status" "scripts" "tmp" "logs"; do
 		echo "Creating directory $f"
 		sleep 1
 		echo
-		mkdir $cfgDir/$f
+		mkdir -v $cfgDir/$f
 		if [ -d $cfgDir/$f ]; then
 			echo
 			echo "The directory $f was sucessfully created"
@@ -238,7 +238,7 @@ done
 echo
 echo "Downloading script to continue setup..."
 sleep 1
-wget -O "/home/$sudoUser/setup.sh" "https://raw.githubusercontent.com/harborunode-ca/kevrevrun-deb/refs/heads/main/$setupDir/setup.sh" 2>&1
+wget -nv -O "/home/$sudoUser/setup.sh" "https://github.com/harbornode-ca/practical-wayland/raw/refs/heads/main/setup.sh" 2>&1
 exit=$?
 if [ "$exit" != "0" ]; then
 	errMsg="Script failed to download"
@@ -291,6 +291,7 @@ usrID=$(cat /etc/passwd | grep $usrName | cut -d ":" -f 3)
 sleep 1
 echo
 echo "Setting file permissions"
+echo
 sleep 1
 chown -Rv $usrName:$usrName "$cfgDir"
 usrOwner=$(ls -ld $cfgDir | cut -d " " -f 3)
@@ -312,7 +313,7 @@ echo "Downloading Gum... "
 sleep 1
 gumUrl="https://github.com/charmbracelet/gum/releases/download/v0.17.0/gum_0.17.0_amd64.deb"
 gumDeb="gum_0.17.0_amd64.deb"
-wget -O /tmp/$gumDeb $gumUrl 2>&1
+wget -nv -O /tmp/$gumDeb $gumUrl 2>&1
 exit=$?
 if [ ! -f /tmp/$gumDeb ]; then
         errMsg="Download Failed!"
@@ -325,7 +326,7 @@ fi
 # Installing Gum .deb file using apt
 echo
 echo "Installing Gum..."
-run=$(apt install /tmp/$gumDeb -y --allow-downgrades 2>&1)
+apt install /tmp/$gumDeb -y --allow-downgrades 2>&1
 exit=$?
 if [ $exit != 0 ]; then
         errMsg="Gum installed failed"
