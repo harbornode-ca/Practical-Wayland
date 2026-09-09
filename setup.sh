@@ -1,20 +1,10 @@
 #!/bin/bash
 setupStg=$(cat /opt/kevrevrun/status/setup.stage)
 stage1 () {
-    echo "Downloading initial setup script..."
-    wget -O "/opt/kevrevrun/scripts/01-script.sh" "https://raw.githubusercontent.com/harbornode-ca/Practical-Wayland/refs/heads/main/scripts/01-script.sh"
-    echo "Making script executable..."
-    chmod +x /opt/kevrevrun/scripts/01-script.sh
-    echo "Starting initial setup script..."
-    /opt/kevrevrun/scripts/01-script.sh
+
 }
 stage2 () {
-    echo "Downloading update script..."
-    wget -O "/opt/kevrevrun/scripts/02-script.sh" "https://raw.githubusercontent.com/harbornode-ca/Practical-Wayland/refs/heads/main/scripts/02-script.sh"
-    echo "Making script executable..."
-    chmod +x /opt/kevrevrun/scripts/02-script.sh
-    echo "Starting update script..."
-    sudo /opt/kevrevrun/scripts/02-script.sh
+
 }
 case $setupStg in
     "0")
