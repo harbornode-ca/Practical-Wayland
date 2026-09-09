@@ -1,3 +1,0 @@
-## Theme Files
-
-**Placeholder**
