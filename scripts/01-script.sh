@@ -184,10 +184,14 @@ echo "Temporary files removed"
 sleep 1
 echo 
 echo "Updating the stage file for stage 2!"
+sleep 0.5
 echo "1" > $stageFile
 sleep 0.5
 echo "Stage file updated"
+sleep 0.5
 echo 
-sleep 1
+echo "The initial setup has completed."
+echo "Your system has been prepared for the next stage of installation."
+echo
 read -p "Press [Enter] key to continue..."
 clear
