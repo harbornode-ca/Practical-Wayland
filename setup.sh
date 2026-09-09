@@ -1,10 +1,10 @@
 #!/bin/bash
 setupStg=$(cat /opt/kevrevrun/status/setup.stage)
 stage1 () {
-
+echo "Placeholder"
 }
 stage2 () {
-
+echo "Placeholder"
 }
 case $setupStg in
     "0")
