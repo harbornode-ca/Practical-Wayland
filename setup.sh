@@ -24,7 +24,8 @@ stage2 () {
     sleep 1
     echo
     echo "Running stage 2 script..."
-    sleep 0.5
+    echo "Will require sudo privileges"
+    sleep 1.5
     echo
     sudo /opt/kevrevrun/scripts/02-script.sh
 }
@@ -36,6 +37,15 @@ stage3 () {
     sleep 0.5
     echo
     /opt/kevrevrun/scripts/03-script.sh
+}
+stage4 () {
+    echo "Beginning stage 4 of the install process"
+    sleep 1
+    echo
+    echo "Running stage 4 script..."
+    sleep 0.5
+    echo
+    /opt/kevrevrun/scripts/04-script.sh
 }
 case $setupStg in
     "0")
