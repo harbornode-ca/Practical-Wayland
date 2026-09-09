@@ -1,19 +1,62 @@
 #!/bin/bash
 # Confirms and creates initial directories if missing.
+echo
+echo "Confirming directory structure"
+sleep 1
 for folder in "cfg" "status" "scripts" "tmp" "logs"; do
     if [ ! -d "/opt/kevrevrun/$folder" ]; then
+        echo
+        echo "Folder $folder not found"
+        sleep 0.25
+        echo "Creating $folder"
         mkdir -v /opt/kevrevrun/$folder
-    fi
-done
-for folder in "cfg" "status" "scripts" "tmp" "logs"; do
-    if [ ! -d "/opt/kevrevrun/$folder" ]; then
-        echo "Error: Directory $folder not found"  
-        exit 1
+        sleep 0.5
     else
-        echo "Directory $folder found"
+        echo
+        echo "Folder $folder confirmed"
+        sleep 0.25
     fi
 done
+sleep 1
+echo
+echo "Checking file structure"
+sleep 1
+for file in "/opt/kevrevrun/id.usr" "/opt/kevrevrun/name.usr" "/opt/kevrevrun/status/setup.stage" "/opt/kevrevrun/status/loop.status" "/opt/kevrevrun/install.dir"; do
+    if [ ! -f $file ]; then
+        echo
+        echo "Error: $file not found"
+        if [ $file = "/opt/kevrevrun/id.usr" ]; then
+            echo $UID > $file
+            echo "Repaired $file"
+            sleep 0.5
+        elif [ $file = "/opt/kevrevrun/name.usr" ]; then
+            echo $USER > $file
+            echo "Repaired $file"
+            sleep 0.5
+        elif [ $file = "/opt/kevrevrun/status/setup.stage" ]; then
+            echo "0" > $file
+            echo "Repaired $file"
+            sleep 0.5
+        elif [ $file = "/opt/kevrevrun/status/loop.status" ]; then
+            echo "0" > $file
+            echo "Repaired $file"
+            sleep 0.5
+        elif [ $file = "/opt/kevrevrun/install.dir" ]; then
+            echo "$HOME" > $file
+            echo "Repaired $file"
+            sleep 0.5
+        fi
+    else
+        echo
+        echo "File $file confirmed"
+        sleep 0.25
+    fi
+done
+sleep 1
 # Creates a file that contains all folder used in the installation
+echo
+echo "Creating Setup Variables...Folders"
+sleep 1
 cat << 'EOF' > /opt/kevrevrun/status/folders.list
 mainDir,/opt/kevrevrun
 statusDir,/opt/kevrevrun/status
@@ -22,27 +65,52 @@ cfgDir,/opt/kevrevrun/cfg
 tmpDir,/opt/kevrevrun/tmp
 logDir,/opt/kevrevrun/logs
 EOF
+echo
+echo "Setup variables saved to folders.list"
+sleep 1
 # Sets the folder variables for each folder in folders.list
+echo
+echo "Setting up Folder Variables"
+echo
+sleep 1
 fldrList=$(cat /opt/kevrevrun/status/folders.list)
 for f in $fldrList; do
     varName=$(echo $f | cut -d ',' -f 1)
     varValue=$(echo $f | cut -d ',' -f 2)
     export $varName="$varValue" 2>&1
+    echo "Folder Variable $varName is set to $varValue"
+    sleep 0.25
 done
 # Creates file that contains all files that hold a status across scripts and reboots.
+echo
+echo "Creating Setup Variables...Files"
+sleep 1
 cat << 'EOF' > /opt/kevrevrun/status/files.list
 stageFile,/opt/kevrevrun/status/setup.stage
 statusFile,/opt/kevrevrun/status/loop.status
 mainLog,/opt/kevrevrun/logs/main.log
 EOF
+echo
+echo "Setup variables saved to files.list"
+sleep 1
 # Sets variables for the status files
+echo
+echo "Setting up File Variables"
+sleep 1
+echo
 varFiles=$(cat /opt/kevrevrun/status/files.list)
 for v in $varFiles; do
     varName=$(echo $v | cut -d ',' -f 1)
     varValue=$(echo $v | cut -d ',' -f 2)
     export $varName="$varValue"
+    echo "File Variable $varName is set to $varValue"
+    sleep 0.25
 done
+sleep 1
 # Creates a file that allows the saved variables to be called into the current script
+echo
+echo "Creating Setup Variables...Values"
+sleep 1
 cat << 'EOF' > /opt/kevrevrun/status/values.list
 loopStat,/opt/kevrevrun/status/loop.status
 nowStep,/opt/kevrevrun/status/setup.stage
@@ -50,30 +118,76 @@ usrId,/opt/kevrevrun/id.usr
 usrName,/opt/kevrevrun/name.usr
 setupDir,/opt/kevrevrun/install.dir
 EOF
+echo
+echo "Setup variables saved to values.list"
+sleep 1
 # Reads the values from the files in values.list
+echo
+echo "Reading and Exporting All Setup Variables"
+sleep 1
 valueList=$(cat /opt/kevrevrun/status/values.list)
 for v in $valueList; do
     varName=$(echo $v | cut -d ',' -f 1)
     fileName=$(echo $v | cut -d ',' -f 2)
     varValue=$(cat $fileName)
     export $varName="$varValue"
+    echo "Variable $varName has been imported with value $varValue"
+    sleep 0.25
 done
-wget -O $tmpDir/practical-wayland.zip https://github.com/harbornode-ca/Practical-Wayland/archive/refs/heads/main.zip
-if [ -f $tmpDir/practical-wayland.zip ]; then
-    unzip $tmpDir/practical-wayland.zip
+echo 
+echo "Downloading and extracting Practical Wayland"
+sleep 1
+echo
+wget -O "$tmpDir/practical-wayland.zip" "https://github.com/harbornode-ca/Practical-Wayland/archive/refs/heads/main.zip"
+if [ -f "$tmpDir/practical-wayland.zip" ]; then
+    echo
+    echo "File sucessfully downloaded"
+    sleep 1
+    echo
+    echo "Extracting files"
+    sleep 1
+    unzip "$tmpDir/practical-wayland.zip" -d "$tmpDir"
+    echo
+    echo "Extraction completed"
+    sleep 1
 fi
+echo
+echo "Moving files from the installation directory to Main directory"
+sleep 1
+echo
 #Move files from the installation directory to Main directory
 destFldr="$scriptDir $cfgDir"
 for f in $destFldr; do
-    echo $f
+    echo "Empting folder $f"
     rm -rvf $f/*
+    sleep 1
 done
-destFldr="$scriptDir $cfgDir"
+echo
 for f in $destFldr; do
     srcFldr=$(echo $f | cut -d '/' -f 4)
-    cp -Rv ./Practical-Wayland-main/$srcFldr/* $f
+    echo "Copying files to folder $f"
+    cp -Rv $tmpDir/practical-wayland-main/$srcFldr/* $f
+    sleep 1
 done
-#Cleaning up Practical Wayland files
-rm -fv $tmpDir/practical-wayland.zip
-rm -rvf $tmpDir/Practical-Wayland-main
-echo 1 > $stageFile
+echo
+echo "Cleaning up temporary files"
+sleep 1
+echo
+echo "Removing ZIP File"
+rm -fv "$tmpDir/practical-wayland.zip"
+sleep 0.5
+echo "Removing temporary extraction folder"
+rm -rvf "$tmpDir/practical-wayland-main"
+sleep 0.5
+echo
+echo "Temporary files removed"
+sleep 1
+echo 
+echo "Updating the stage file for stage 2!"
+echo "1" > $stageFile
+sleep 0.5
+echo "Stage file updated"
+echo 
+sleep 1
+read -p "Press [Enter] key to continue..."
+clear

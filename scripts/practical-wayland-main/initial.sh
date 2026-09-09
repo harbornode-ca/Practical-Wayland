@@ -5,11 +5,10 @@ echo $installDir > $cfgDir/install.dir
 banner () {
 echo
 echo "---------------------------------------------------------------------------"
-echo "|                           *** KEVREVRUN ***                             |"
-echo "|                                 * & *                                   |"
-echo "|                  *** The Crappy Bash Scripts Group ***                  |"
-echo "|                              * Presents *                               |"
-echo "|                  Practical Debian Wayland Environments                  |"
+echo "|                            *** KEVREVRUN ***                            |"
+echo "|                               * Presents *                              |"
+echo "|                  In association with Crappy-Bash-Scripts                |"
+echo "|                   Practical Debian Wayland Environments                 |"
 echo "---------------------------------------------------------------------------"
 echo
 echo
@@ -49,7 +48,7 @@ chkSudoUser=$(cat /etc/passwd | grep -c $sudoUser)
 sleep 1
 if [ "$chkSudoUser" = "1" ]; then
 	echo
-	echo "The user $sudoUser is a valid user!"
+	echo "$sudoUser is a valid user!"
 	sleep 1
 	chk_sudo
 else
@@ -147,9 +146,7 @@ else
 	echo
 	echo "The package cache has updated sucessfully"
 fi
-apt update | tee output.tmp
-chkUpdates=$(grep -c "packages can be upgraded" output.tmp 2>&1)
-rm output.tmp
+chkUpdates=$(apt update | grep -c "packages can be upgraded" 2>&1)
 if [ $chkUpdates = 1 ]; then
 	echo
 	echo "Updates are available."
@@ -269,7 +266,8 @@ id -u $sudoUser > $cfgDir/id.usr
 echo $sudoUser > $cfgDir/name.usr
 echo 0 > $cfgDir/status/setup.stage
 echo 0 > $cfgDir/status/loop.status
-for f in "$cfgDir/id.usr" "$cfgDir/name.usr" "$cfgDir/status/setup.stage" "$cfgDir/status/loop.status"; do
+echo 0 > $cfgDir/status/setup.stage
+for f in "$cfgDir/id.usr" "$cfgDir/name.usr" "$cfgDir/status/setup.stage" "$cfgDir/status/loop.status" "$cfgDir/status/setup.stage"; do
 	if [ -f  $f ]; then
 		echo
 		echo "Successfully created $f"
