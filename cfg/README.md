@@ -1,4 +1,4 @@
-## Config Folder -cfg
+## Config Folder
 
 The folder for everything related to configuration. I'll try to keep it organized...
 
