@@ -37,5 +37,9 @@ for v in $valueList; do
     echo "Variable $varName has been imported with value $varValue"
     sleep 0.25
 done
-#This script will install the dependacies for Noctalia
-
+#This script will add the noctalia repository
+wget -O $tmpDir/nickh-archive-keyring.deb https://pkg.noctalia.dev/deb/nickh-archive-keyring.deb
+dpkg -i nickh-archive-keyring.deb
+wget -O $tmpDir/noctalia-unstable.sources https://pkg.noctalia.dev/deb/noctalia-unstable.sources
+sudo apt update
+sudo apt install noctalia noctalia-greeter umbriel xdg-desktop-portal-umbriel
