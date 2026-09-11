@@ -7,12 +7,7 @@ Dependancies listed for building from source:
 - clang
 - libxkbcommon-dev
 - libwayland-dev
-- librust-dbus-udisks2-dev
-- librust-dbus-dev
 - libpipewire-0.3-dev
-- librust-libpulse-binding-dev
-- librust-libpulse-mainloop-glib-sys-dev
-- librust-libpulse-glib-binding-dev
 - libpulse-dev
 
 ## Ashell installation resources

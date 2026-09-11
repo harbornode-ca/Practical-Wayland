@@ -17,6 +17,5 @@
 ## Dependancies
 
 - build-essential
-- librust-pam-sys-dev
 - libpam0g-dev
 

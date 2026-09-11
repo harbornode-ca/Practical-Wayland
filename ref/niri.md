@@ -41,29 +41,19 @@ Current version source: https://github.com/niri-wm/niri/archive/refs/tags/v26.04
 - librust-libudev-sys-dev
 - libudev-dev 
 - libgbm-dev
-- librust-xkb-dev
-- librust-xkbcommon-dev
-- librust-xkbcommon-dl-dev
-- librust-xkbcommon-sys-dev
 - libxkbcommon-dev 
 - libegl1-mesa-dev 
 - libwayland-dev 
 - libinput-dev 
 - libdbus-1-dev
 - libdbusmenu-gtk-dev
-- librust-libdbus-sys-dev
 - libdbusmenu-gtk3-dev
 - libdbusmenu-gtk4
-- librust-libsystemd-dev
 - libsystemd-dev
 - libseat-dev
-- librust-libseat-dev
-- librust-libseat-sys-dev
 - libpipewire-0.3-dev 
 - libpango1.0-dev 
 - libdisplay-info-dev
-- librust-libdisplay-info-dev
-- librust-libdisplay-info-sys-dev
 
 ### File Install Locations
 

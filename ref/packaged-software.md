@@ -30,7 +30,7 @@
 - **Voxtype** - Git: https://github.com/peteonrails/voxtype (Website: https://voxtype.io)
 - **Markpad** - Git: https://github.com/sftwrdotdev/Markpad
 	- *A fast, feature-rich Markdown editor for Linux*
-- Pake - Git: https://github.com/tw93/Pake (Website: https://faberon.io/projects/pake)
+- **Pake** - Git: https://github.com/tw93/Pake (Website: https://faberon.io/projects/pake)
 	- *Turn any website into a desktop app*
 	- *Uses Rust + Tauri instead of Electron*
 - **Fresh** - Git: https://github.com/sinelaw/fresh (Website: https://getfresh.dev)

@@ -169,29 +169,3 @@
 | Super + A | Opencode |
 | Super + Shift + A | Herdr |
 | Super + Ctrl + A | Open WebUI |
-
-
-## App Specific Keybinds
-
-
-### Omawrite 
-
-
-| Key Combo | Function |
-|---|---|
-| Ctrl + S | Save |
-| Ctrl + Shift + S | Saves As |
-| Ctrl + O | Open |
-| Ctrl + P | Print |
-| Ctrl + N | New Window |
-| Ctrl + Z | Undo |
-| Ctrl + Shift + Z | Cancel Undo |
-| Ctrl + Y | Redo |
-| Ctrl + F | Find |
-| Ctrl + H | Find & Replace 
-| Enter | Find Next |
-| Shift+Enter | Previous Match |
-| Ctrl + B | Bold |
-| Ctrl + I | Italic |
-| Ctrl + K | Insert Link |
-| Ctrl + ? | Shortcut Reference |
