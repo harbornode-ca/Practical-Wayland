@@ -143,7 +143,7 @@ sleep 0.5
 echo
 echo "Installing lemurs binary from source"
 sleep 0.5
-sudo cp $tmpDir/lemurs/target/release/lemurs /usr/bin/
+sudo cp $tmpDir/lemurs/target/release/lemurs /usr/bin/lemurs
 if [ $? -ne 0 ]; then
     echo "Lemurs binary failed to copy"
     echo "Please try running the script again"
@@ -199,7 +199,7 @@ else
 fi
 echo
 echo "Copying configuration files"
-sudo cp -fv $tmpDir/lemurs/extra/config.toml /etc/lemurs/config.toml
+sudo cp -fv $cfgDir/dotfiles/lemurs-config.toml /etc/lemurs/config.toml
 if [ $? -ne 0 ]; then
     echo "Lemurs configuration file failed to copy"
     echo "Please try running the script again"
@@ -231,6 +231,7 @@ else
 fi
 echo
 echo "Enabling Lemurs systemd service"
+sleep 0.5
 sudo systemctl daemon-reload
 sudo systemctl enable --now lemurs.service
 if [ $? -ne 0 ]; then
@@ -248,17 +249,60 @@ else
 fi
 echo
 echo "Lemurs has been installed and enabled successfully."
-echo
-echo
-echo "Updating the stage file"
-echo "8" > $stageFile
 sleep 0.5
-echo "Stage file updated"
-sleep 0.5
-echo 
-echo "Noctalia repository has been set up and packages have been installed successfully."
-echo "Your system has been prepared for the next stage of installation."
 echo
-read -p "Press [ENTER] key to continue..."
-clear
-exit 0
+echo "Starting niri install"
+sleep 0.5
+echo
+echo "Adding repository for Niri"
+sleep 0.5
+echo
+echo Downloading DMS-key.gpg
+wget -nv -O $tmpDir/DMS-key.gpg https://download.opensuse.org/repositories/home:AvengeMedia:danklinux/Debian_Testing/Release.key
+if [ -f $tmpDir/DMS-key.gpg ]; then
+    echo "DMS-key.gpg downloaded successfully"
+    echo "Installing key to APT keyring"
+    sleep 0.5
+    cat $tmpDir/DMS-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/DMS-key.gpg
+    if [ $? -ne 0 ]; then
+        echo "Failed to install DMS-key.gpg"
+        exit 1
+    else
+        echo "DMS-key.gpg installed successfully"
+    fi
+else
+    echo "Failed to download DMS-key.gpg"
+    exit 1
+fi
+echo
+echo "Adding DMS repository to APT sources"
+sudo cp -fv $cfgDir/install-cfg/dms.sources /etc/apt/sources.list.d/dms.sources
+if [ $? -ne 0 ]; then
+    echo "Failed to add DMS repository to APT sources"
+    exit 1
+else
+    echo "DMS repository added successfully"
+    sleep 0.5
+fi
+echo
+echo "Updating APT package cache"
+sleep 0.5
+sudo apt update
+if [ $? -ne 0 ]; then
+    echo "Failed to update APT package cache"
+    exit 1
+else
+    echo "APT package cache updated successfully"
+    sleep 0.5
+fi
+echo
+echo "Installing Niri"
+sleep 0.5
+sudo DEBIAN_FRONTEND=noninteractive apt install niri
+if [ $? -ne 0 ]; then
+    echo "Failed to install Niri"
+    exit 1
+else
+    echo "Niri installed successfully"
+    sleep 0.5
+fi

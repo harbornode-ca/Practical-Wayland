@@ -1,3 +1,6 @@
+*NO LONGER REQUIRED*
+**MARKED FOR DELETION**
+
 # Niri Based Desktop Environment
 
 ---
@@ -124,3 +127,4 @@ Docs: https://docs.noctalia.dev/noctalia/
 #### Resources
 Git: https://github.com/noctalia-dev/noctalia-greeter
 Docs: https://docs.noctalia.dev/greeter/
+

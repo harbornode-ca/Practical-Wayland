@@ -65,21 +65,21 @@ else
     echo
     echo "No GPU detected"
 fi
-depIntel=$(cat /opt/kevrevrun/cfg/intel.dep)
+depIntel=$(cat /opt/kevrevrun/cfg/deps//intel.dep)
  if [ $installIntel == true ]; then
     echo
     echo "Installing Intel GPU drivers"
     sleep 1
     sudo apt install $depIntel -y 2>&1
 fi
-depAMD=$(cat /opt/kevrevrun/cfg/amdgpu.dep)
+depAMD=$(cat /opt/kevrevrun/cfg/deps/amdgpu.dep)
 if [ $installAMD == true ]; then
     echo
     echo "Installing AMD GPU drivers"
     sleep 1
     sudo apt install $depAMD -y 2>&1
 fi
-depNVIDIA=$(cat /opt/kevrevrun/cfg/nvidia.dep)
+depNVIDIA=$(cat /opt/kevrevrun/cfg/deps/nvidia.dep)
 urlNVIDIA=$(cat /opt/kevrevrun/cfg/nvidia.url)
 if [ $installNVIDIA == true ]; then
     echo

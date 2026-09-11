@@ -59,7 +59,7 @@ echo
 echo "Copying Forky sources to /etc/apt/sources.list.d/"
 sleep 1
 echo
-sudo cp -fv "$cfgDir/apt-files/enabledForky.sources" "/etc/apt/sources.list.d/forky.sources"
+sudo cp -fv "$cfgDir/debian-sources/enabledForky.sources" "/etc/apt/sources.list.d/forky.sources"
 echo "Forky sources installed"
 sleep 0.5
 echo
