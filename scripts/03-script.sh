@@ -70,7 +70,7 @@ sleep 0.5
 echo
 echo "Updating the stage file for stage 4!"
 sleep 0.5
-echo "1" > $stageFile
+echo "3" > $stageFile
 sleep 0.5
 echo "Stage file updated"
 sleep 0.5

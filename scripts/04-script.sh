@@ -1,3 +1,4 @@
+#!/bin/bash
 echo
 echo "Setting up Folder Variables"
 echo
@@ -36,26 +37,41 @@ for v in $valueList; do
     echo "Variable $varName has been imported with value $varValue"
     sleep 0.25
 done
-# Checking for system GPU types using lspci
-intelGPU=$(lspci | grep -i vga | grep -i "Intel")
-amdGPU=$(lspci | grep -i vga | grep -i "AMD")
-nvidiaGPU=$(lspci | grep -i vga | grep -i "NVIDIA")
-
-if [ -n "$intelGPU" ]; then
-    echo "Intel GPU detected"
-    echo "The following Intel GPUs detected:
-    cat $intelGPU
-    
-elif [ -n "$amdGPU" ]; then
-    echo "AMD GPU detected"
-    echo "The following AMD GPUs detected:
-    cat $amdGPU
-    
-elif [ -n "$nvidiaGPU" ]; then
-    echo "NVIDIA GPU detected"
-    echo "The following NVIDIA GPUs detected:
-    cat $nvidiaGPU
-    
+echo
+echo "Adding i386 architecture"
+sleep 1
+dpkg --add-architecture i386
+archChk=$(dpkg --print-foreign-architectures)
+if [ $archChk == "i386" ]; then
+    echo "i386 architecture added sucesfully"
+    sleep 0.5
 else
-    echo "No GPU detected"
+    echo "i386 architecture not added"
+    echo "Please try installing i386 architecture manually"
+    Sleep 1
+    echo
+    echo "This script will now exit"
+    read -p "Press [Enter] key to exit..."
+    exit 1
 fi
+echo
+echo "Updating APT package cache"
+sleep 1
+apt update 2>&1
+echo
+echo "APT package cache updated successfully"
+sleep 1
+echo
+echo "Updating the stage file for stage 4!"
+sleep 0.5
+echo "4" > $stageFile
+sleep 0.5
+echo "Stage file updated"
+sleep 0.5
+echo 
+echo "i386 architchture support has been sucessfully added"
+echo "Your system has been prepared for the next stage of installation."
+echo
+read -p "Press [Enter] key to continue..."
+clear
+exit 0
