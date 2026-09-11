@@ -1,8 +1,8 @@
 #!/bin/bash
-echo
+
 echo "Setting up Folder Variables"
 echo
-sleep 1
+sleep 0.5
 fldrList=$(cat /opt/kevrevrun/status/folders.list)
 for f in $fldrList; do
     varName=$(echo $f | cut -d ',' -f 1)
@@ -12,9 +12,8 @@ for f in $fldrList; do
     sleep 0.25
 done
 echo
-echo
 echo "Setting up File Variables"
-sleep 1
+sleep 0.5
 echo
 varFiles=$(cat /opt/kevrevrun/status/files.list)
 for v in $varFiles; do
@@ -26,7 +25,7 @@ for v in $varFiles; do
 done
 echo
 echo "Reading and Exporting All Setup Variables"
-sleep 1
+sleep 0.5
 echo
 valueList=$(cat /opt/kevrevrun/status/values.list)
 for v in $valueList; do
@@ -54,15 +53,55 @@ selMenu()
 case $choice in
     1)
         echo "You selected Noctalia"
+        echo
+        echo "Updating the stage file"
+        echo "6" > $stageFile
+        sleep 0.5
+        echo 
+        echo "Stage file updated"
+        sleep 0.5
+        echo 
+        echo "Noctalia will now install"
         sleep 1
-        ;;
+        echo
+        $scriptDir/07-script.sh
+        ;;       
     2)
         echo "You selected Niri w/ Ashell"
+        echo
+        echo "Updating the stage file"
+        echo "6" > $stageFile
+        sleep 0.5
+        echo 
+        echo "Stage file updated"
+        sleep 0.5
+        echo 
+        echo "Niri w/ Ashell will now install"
+        echo 
         sleep 1
+        echo
+        $scriptDir/08-script.sh       
         ;;
     3)
         echo "You selected lxqt w/ niri wm"
-        sleep 1scripts/06-script.sh 
+        echo
+        echo "Updating the stage file"
+        echo "6" > $stageFile
+        sleep 0.5
+        echo 
+        echo "Stage file updated"
+        sleep 0.5
+        echo 
+        echo "lxqt w/ niri wm will now install"
+        echo 
+        sleep 1
+        #Script not yet Implimented
+        echo
+        echo "Installation script not yet implimented"
+        echo "Please select another option"
+        sleep 0.5
+        echo
+        selMenu
         ;;
     *)
         echo "Invalid choice"

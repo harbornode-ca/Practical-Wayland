@@ -1,4 +1,6 @@
 #!/bin/bash
+#This script adds the noctalia repo, updates apt, and installs 
+#noctalia, noctalia-greeter, umbriel, and xdg-desktop-portal-umbriel
 echo
 echo "Setting up Folder Variables"
 echo
@@ -11,7 +13,6 @@ for f in $fldrList; do
     echo "Folder Variable $varName is set to $varValue"
     sleep 0.25
 done
-echo
 echo
 echo "Setting up File Variables"
 sleep 1
@@ -37,9 +38,113 @@ for v in $valueList; do
     echo "Variable $varName has been imported with value $varValue"
     sleep 0.25
 done
-#This script will add the noctalia repository
-wget -O $tmpDir/nickh-archive-keyring.deb https://pkg.noctalia.dev/deb/nickh-archive-keyring.deb
-dpkg -i nickh-archive-keyring.deb
-wget -O $tmpDir/noctalia-unstable.sources https://pkg.noctalia.dev/deb/noctalia-unstable.sources
+echo "Setting up Noctalia Repository"
+echo
+echo "Downloading keyring"
+wget -nv -O $tmpDir/nickh-archive-keyring.deb https://pkg.noctalia.dev/deb/nickh-archive-keyring.deb
+if [ -f $tmpDir/nickh-archive-keyring.deb ]; then
+    echo "Download Complete"
+    sleep 0.5
+else
+    echo "Noctalia keyring failed to download."
+    echo "Please try running the script again."
+    sleep 1
+    echo
+    echo "This script will now exit"
+    read -p "Press [ENTER] key to exit"
+    clear
+    exit 1
+fi
+echo
+echo "Installing Noctalia Keyring"
+sudo dpkg -i $tmpDir/nickh-archive-keyring.deb
+if [ $? -ne 0 ]; then
+    echo "Noctalia keyring failed to install"
+    echo "Please try running the script again"
+    sleep 1
+    echo
+    echo "This script will now exit"
+    read -p "Press [ENTER] key to exit"
+    clear
+    exit 1
+else
+    echo "Keyring installed successfully"
+    sleep 0.5
+fi
+echo
+echo "Downloading Noctalia APT sources file"
+sleep 0.5
+wget -nv -O $tmpDir/noctalia-unstable.sources https://pkg.noctalia.dev/deb/noctalia-unstable.sources
+if [ -f $tmpDir/noctalia-unstable.sources ]; then
+    echo "Download Complete"
+    sleep 0.5
+else
+    echo "Noctalia sources file failed to download."
+    echo "Please try running the script again."
+    sleep 1
+    echo
+    echo "This script will now exit"
+    read -p "Press [ENTER] key to exit"
+    clear
+    exit 1
+fi
+echo
+echo "Adding Noctalia APT sources file to APT sources directory"
+sleep 0.5
+mv -vf $tmpDir/noctalia-unstable.sources /etc/apt/sources.list.d/
+echo "Noctalia APT sources file added successfully"
+sleep 0.5
+echo
+echo "Updating APT packages cache"
+echo
 sudo apt update
-sudo apt install noctalia noctalia-greeter umbriel xdg-desktop-portal-umbriel
+if [ $? -ne 0 ]; then
+    echo "APT packages cache update failed"
+    echo "Please try running the script again"
+    sleep 1
+    echo
+    echo "This script will now exit"
+    read -p "Press [ENTER] key to exit"
+    clear
+    exit 1
+else
+    echo "APT packages cache updated successfully"
+    sleep 0.5
+fi
+echo
+echo "Installing packages from Noctalia repository"
+echo
+sudo DEBIAN_FRONTEND=noninteractive apt install noctalia noctalia-greeter umbriel xdg-desktop-portal-umbriel -y
+if [ $? -ne 0 ]; then
+    echo "Noctalia packages failed to install"
+    echo "Please try running the script again"
+    sleep 1
+    echo
+    echo "This script will now exit"
+    read -p "Press [ENTER] key to exit"
+    clear
+    exit 1
+else
+    echo "Noctalia packages installed successfully"
+    sleep 0.5
+fi
+echo
+echo "Cleaning up temporary files"
+echo
+rm -fv $tmpDir/nickh-archive-keyring.deb
+rm -fv $tmpDir/noctalia-unstable.sources
+echo "Temporary files cleaned up successfully"
+sleep 0.5
+echo
+echo "Updating the stage file for stage 8!"
+echo "7" > $stageFile
+sleep 0.5
+echo "Stage file updated"
+sleep 0.5
+echo 
+echo "Noctalia repository has been set up and packages have been installed successfully."
+echo "Your system has been prepared for the next stage of installation."
+echo
+read -p "Press [ENTER] key to continue..."
+clear
+exit 0

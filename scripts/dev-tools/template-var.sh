@@ -2,7 +2,7 @@
 echo
 echo "Setting up Folder Variables"
 echo
-sleep 1
+sleep 0.5
 fldrList=$(cat /opt/kevrevrun/status/folders.list)
 for f in $fldrList; do
     varName=$(echo $f | cut -d ',' -f 1)
@@ -12,9 +12,8 @@ for f in $fldrList; do
     sleep 0.25
 done
 echo
-echo
 echo "Setting up File Variables"
-sleep 1
+sleep 0.5
 echo
 varFiles=$(cat /opt/kevrevrun/status/files.list)
 for v in $varFiles; do
@@ -26,7 +25,7 @@ for v in $varFiles; do
 done
 echo
 echo "Reading and Exporting All Setup Variables"
-sleep 1
+sleep 0.5
 echo
 valueList=$(cat /opt/kevrevrun/status/values.list)
 for v in $valueList; do

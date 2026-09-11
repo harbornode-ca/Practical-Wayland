@@ -1,9 +1,8 @@
 #!/bin/bash
 # Adds Debian Forky repositories and updates system to Debian Forky.
-echo
 echo "Setting up Folder Variables"
 echo
-sleep 1
+sleep 0.5
 fldrList=$(cat /opt/kevrevrun/status/folders.list)
 for f in $fldrList; do
     varName=$(echo $f | cut -d ',' -f 1)
@@ -13,9 +12,8 @@ for f in $fldrList; do
     sleep 0.25
 done
 echo
-echo
 echo "Setting up File Variables"
-sleep 1
+sleep 0.5
 echo
 varFiles=$(cat /opt/kevrevrun/status/files.list)
 for v in $varFiles; do
@@ -25,9 +23,9 @@ for v in $varFiles; do
     echo "File Variable $varName is set to $varValue"
     sleep 0.25
 done
-echo
+echo    
 echo "Reading and Exporting All Setup Variables"
-sleep 1
+sleep 0.5
 echo
 valueList=$(cat /opt/kevrevrun/status/values.list)
 for v in $valueList; do
@@ -41,16 +39,16 @@ done
 echo
 echo "Removing non-modernized APT sources and setting up Debian Forky sources"
 echo
-sleep 1
+sleep 0.5
 oldRepos=$(find /etc/apt -name "sources.list*" -not -regex ".*/sources.list.d.*")
 for r in $oldRepos; do
-    rm -fv $r
+    sudo rm -fv $r
 done
 echo "Removed old APT sources files"
 sleep 0.5
 echo "Removing Debian installer generated source file"
 if [ -f /etc/apt/sources.list.d/debian.sources ]; then
-    rm -fv /etc/apt/sources.list.d/debian.sources
+    sudo rm -fv /etc/apt/sources.list.d/debian.sources
     sleep 0.5
     echo "Debian installer generated source file removed"
 else
@@ -61,19 +59,19 @@ echo
 echo "Copying Forky sources to /etc/apt/sources.list.d/"
 sleep 1
 echo
-cp -fv "$cfgDir/apt-files/enabledForky.sources" "/etc/apt/sources.list.d/forky.sources"
+sudo cp -fv "$cfgDir/apt-files/enabledForky.sources" "/etc/apt/sources.list.d/forky.sources"
 echo "Forky sources installed"
 sleep 0.5
 echo
 echo "Updating APT package cache"
 sleep 0.5
-apt update 2>&1 > $tmpDir/update.tmp
+sudo apt update 2>&1 > $tmpDir/update.tmp
 chkUpgrades=$(cat $tmpDir/update.tmp | grep -c "packages can be upgraded")
 numUpdates=$(cat $tmpDir/update.tmp | grep "packages can be upgraded" | cut -d ' ' -f 1)
 if [ $chkUpgrades != 0 ]; then
     echo "There are $numUpdates upgrades available!"
     echo "Updating system"
-    DEBIAN_FRONTEND=noninteractive apt upgrade -y
+    sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y
 else
     echo "There are no updates available."
     sleep 0.5
@@ -82,7 +80,7 @@ else
     sleep 0.5
 fi
 echo
-echo "Updating the stage file for stage 3!"
+echo "Updating the stage file"
 sleep 0.5
 echo "2" > $stageFile
 sleep 0.5

@@ -1,7 +1,6 @@
-echo
 echo "Setting up Folder Variables"
 echo
-sleep 1
+sleep 0.5
 fldrList=$(cat /opt/kevrevrun/status/folders.list)
 for f in $fldrList; do
     varName=$(echo $f | cut -d ',' -f 1)
@@ -11,9 +10,8 @@ for f in $fldrList; do
     sleep 0.25
 done
 echo
-echo
 echo "Setting up File Variables"
-sleep 1
+sleep 0.5
 echo
 varFiles=$(cat /opt/kevrevrun/status/files.list)
 for v in $varFiles; do
@@ -25,7 +23,7 @@ for v in $varFiles; do
 done
 echo
 echo "Reading and Exporting All Setup Variables"
-sleep 1
+sleep 0.5
 echo
 valueList=$(cat /opt/kevrevrun/status/values.list)
 for v in $valueList; do
@@ -47,21 +45,21 @@ if [ -n "$intelGPU" ]; then
     echo "Intel GPU detected"
     echo "The following Intel GPUs detected:"
     cat $intelGPU
-    sleep 1
+    sleep 1.5
     installIntel=true
 elif [ -n "$amdGPU" ]; then
     echo
     echo "AMD GPU detected"
     echo "The following AMD GPUs detected:"
     cat $amdGPU
-    sleep 1
+    sleep 1.5
     installAMD=true
 elif [ -n "$nvidiaGPU" ]; then
     echo
     echo "NVIDIA GPU detected"
     echo "The following NVIDIA GPUs detected:"
     cat $nvidiaGPU
-    sleep 1
+    sleep 1.5
     installNVIDIA=true
 else
     echo
@@ -72,76 +70,77 @@ depIntel=$(cat /opt/kevrevrun/cfg/intel.dep)
     echo
     echo "Installing Intel GPU drivers"
     sleep 1
-    apt install $depIntel -y 2>&1
+    sudo apt install $depIntel -y 2>&1
 fi
 depAMD=$(cat /opt/kevrevrun/cfg/amdgpu.dep)
 if [ $installAMD == true ]; then
     echo
     echo "Installing AMD GPU drivers"
     sleep 1
-    apt install $depAMD -y 2>&1
+    sudo apt install $depAMD -y 2>&1
 fi
 depNVIDIA=$(cat /opt/kevrevrun/cfg/nvidia.dep)
 urlNVIDIA=$(cat /opt/kevrevrun/cfg/nvidia.url)
-echo
-echo "Adding Nvidia Driver Repository"
-sleep 1
-wget -nv -O $tmpDir/cuda.deb $urlNVIDIA
-dpkg -i $tmpDir/cuda.deb 2>&1
-exitCode=$?
-if [ $exitCode -ne 0 ]; then
-    echo "Nvidia Driver Repository installation failed!"
-    echo "Please try installing Nvidia Driver Repository manually"
-    Sleep 1
+if [ $installNVIDIA == true ]; then
     echo
-    echo "This script will now exit"
-    read -p "Press [Enter] key to exit..."
-    exit 1
-else
-    echo "Nvidia Driver Repository installed successfully"
+    echo "Adding Nvidia Driver Repository"
     sleep 1
+    wget -nv -O $tmpDir/cuda.deb $urlNVIDIA
+    sudo dpkg -i $tmpDir/cuda.deb 2>&1
+    exitCode=$?
+    if [ $exitCode -ne 0 ]; then
+        echo "Nvidia Driver Repository installation failed!"
+        echo "Please try installing Nvidia Driver Repository manually"
+        Sleep 1
+        echo
+        echo "This script will now exit"
+        read -p "Press [Enter] key to exit..."
+        exit 1
+    else
+        echo "Nvidia Driver Repository installed successfully"
+        sleep 0.5
+    fi
+    echo
+    echo "Updating APT package cache"
+    0.5
+    echo
+    sudo apt update 2>&1
+    echo
+    echo "APT package cache updated successfully"
+    sleep 0.5
+    echo "Cleaning up temporary files"
+    echo
+    rm -fv $tmpDir/cuda.deb
+    echo
+    echo "Temporary files removed"
+    sleep 0.5
+    echo
+    echo "Installing Nvidia Dependancies"
+    sleep 0.5
+    echo
+    sudo apt install $depNVIDIA -y 2>&1
+    echo
+    echo "Nvidia Dependancies installed successfully"
+    sleep 0.5
+    echo
+    echo "Installing NVIDIA Driver Packages"
+    sleep 0.5
+    echo
+    sudo apt install nvidia-open -y 2>&1
+    echo
+    echo "NVIDIA Driver installation completed successfully"
+    sleep 0.5
 fi
 echo
-echo "Updating APT package cache"
-echo
-sleep 1
-apt update 2>&1
-echo
-echo "APT package cache updated successfully"
-sleep 1
-echo
-echo "Installing Nvidia Dependancies"
-echo
-apt install $depNVIDIA -y 2>&1
-echo
-echo "Nvidia Dependancies installed successfully"
-sleep 1
-echo
-echo "Installing NVIDIA Driver Packages"
-sleep 1
-echo
-apt install nvidia-open -y 2>&1
-echo
-echo "NVIDIA Driver installation completed successfully"
-echo
-echo "Cleaning up temporary files"
-echo
-rm -fv $tmpDir/cuda.deb
-echo
-echo "Temporary files removed"
-sleep 1
-echo
 echo "Updating the stage file"
-echo
-"5" > $stageFile
+echo "5" > $stageFile
 sleep 0.5
 echo "Stage file updated"
 sleep 0.5
 echo 
-echo "Nvidia Driver installation complete. A reboot is required to apply changes"
-sleep 0.5
+echo "GPU driver installation complete. A reboot is required to apply changes"
 echo "Once the system reboots please run the main setup.sh script in your home directory to continue."
-sleep 0.5
+sleep 1
 echo 
 read -p "Press [Enter] key when ready to reboot..."
 clear

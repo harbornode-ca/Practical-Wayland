@@ -1,8 +1,7 @@
 #!/bin/bash
-echo
 echo "Setting up Folder Variables"
 echo
-sleep 1
+sleep 0.5
 fldrList=$(cat /opt/kevrevrun/status/folders.list)
 for f in $fldrList; do
     varName=$(echo $f | cut -d ',' -f 1)
@@ -12,9 +11,8 @@ for f in $fldrList; do
     sleep 0.25
 done
 echo
-echo
 echo "Setting up File Variables"
-sleep 1
+sleep 0.5
 echo
 varFiles=$(cat /opt/kevrevrun/status/files.list)
 for v in $varFiles; do
@@ -26,7 +24,7 @@ for v in $varFiles; do
 done
 echo
 echo "Reading and Exporting All Setup Variables"
-sleep 1
+sleep 0.5
 echo
 valueList=$(cat /opt/kevrevrun/status/values.list)
 for v in $valueList; do
@@ -39,8 +37,8 @@ for v in $valueList; do
 done
 echo
 echo "Adding i386 architecture"
-sleep 1
-dpkg --add-architecture i386
+sleep 0.5
+sudo dpkg --add-architecture i386
 archChk=$(dpkg --print-foreign-architectures)
 if [ $archChk == "i386" ]; then
     echo "i386 architecture added sucesfully"
@@ -56,13 +54,13 @@ else
 fi
 echo
 echo "Updating APT package cache"
-sleep 1
-apt update 2>&1
+sleep 0.5
+sudo apt update 2>&1
 echo
 echo "APT package cache updated successfully"
-sleep 1
+sleep 0.5
 echo
-echo "Updating the stage file for stage 4!"
+echo "Updating the stage file"
 sleep 0.5
 echo "4" > $stageFile
 sleep 0.5
@@ -71,6 +69,7 @@ sleep 0.5
 echo 
 echo "i386 architchture support has been sucessfully added"
 echo "Your system has been prepared for the next stage of installation."
+sleep 1
 echo
 read -p "Press [Enter] key to continue..."
 clear
